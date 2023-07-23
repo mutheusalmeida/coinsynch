@@ -1,0 +1,12 @@
+---
+import { Root } from '../../components/Root'
+import Layout from '../../layouts/Layout.astro'
+
+export function getStaticPaths() {
+  return [{ params: { route: undefined } }, { params: { route: 'analytics' } }]
+}
+---
+
+<Layout>
+  <Root client:only />
+</Layout>
