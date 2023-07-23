@@ -1,21 +1,34 @@
 {
   "name": "coinsynch",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "update-deps": "node ./src/config/update-deps.mjs",
+    "generate": "plop --plopfile generators/plopfile.js",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
-    "@astrojs/react": "^2.2.1",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "astro": "^2.9.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.14.2"
+    "@astrojs/image": "0.17.2",
+    "@astrojs/react": "2.2.1",
+    "@astrojs/ts-plugin": "1.1.0",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "astro": "2.9.1",
+    "postcss": "8.4.27",
+    "postcss-preset-env": "9.0.0",
+    "prettier": "3.0.0",
+    "prettier-plugin-astro": "0.11.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6.14.2",
+    "sharp": "^0.32.4"
+  },
+  "devDependencies": {
+    "plop": "^3.1.2"
   }
 }
