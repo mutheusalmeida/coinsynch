@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const Dashboard = () => {
-  const [count, setCount] = useState(0)
-  const [name, setName] = useState('name')
+  const [count] = useState(0)
+  const [, setName] = useState('name')
 
   useEffect(() => {
     setName(`${count} 1`)
-  }, [])
+  }, [count])
 
   return (
     <>
