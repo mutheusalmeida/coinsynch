@@ -13,12 +13,14 @@ import NavMenu from './NavMenu.astro'
   </nav>
 
   <div data-js="modal" class="modal">
-    <div class="modal__content">
-      <button data-js="close-modal" class="modal__close">
-        <Image src={closeIcon} alt="Close" />
-      </button>
+    <div class="modal__container">
+      <div class="modal__content">
+        <button data-js="close-modal" class="modal__close">
+          <Image src={closeIcon} alt="Close" />
+        </button>
 
-      <NavMenu as="nav" />
+        <NavMenu as="nav" />
+      </div>
     </div>
   </div>
 </div>
@@ -40,6 +42,7 @@ import NavMenu from './NavMenu.astro'
     padding: 0;
     border: none;
     width: max-content;
+    cursor: pointer;
   }
 
   .modal {
@@ -56,6 +59,18 @@ import NavMenu from './NavMenu.astro'
       visibility 0.25s ease-in,
       opacity 0.25s ease-in;
     z-index: 15;
+  }
+
+  .modal__container {
+    overflow-y: auto;
+    height: 100%;
+    width: calc(100% + 17px);
+  }
+
+  @media (hover: none) {
+    .modal__container {
+      padding-right: 17px;
+    }
   }
 
   .modal.active {
