@@ -3,6 +3,7 @@ module.exports = {
   extends: ['eslint:recommended'],
   parserOptions: {
     ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   settings: {
     react: {
@@ -20,6 +21,7 @@ module.exports = {
       ],
       parserOptions: {
         parser: '@typescript-eslint/parser',
+        extraFileExtensions: ['.astro'],
       },
     },
     {

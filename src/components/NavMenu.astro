@@ -1,0 +1,39 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>
+
+const { as: Tag, ...props } = Astro.props
+---
+
+<Tag
+  {...props}
+  class="normal-type"
+  style="--font-size: var(--font-size-14)"
+  aria-label="Main navigation"
+>
+  <ul class="list">
+    <li class="list__item"><a href="#about-us">About us</a></li>
+    <li class="list__item"><a href="#top-cyptos">Top cryptos</a></li>
+    <li class="list__item"><button>Sign in</button></li>
+    <li class="list__item"><button>Sign up</button></li>
+  </ul>
+</Tag>
+
+<style>
+  .list {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    & .list__item {
+      list-style: none;
+      line-height: var(--line-height-14);
+
+      & a {
+        text-decoration: none;
+      }
+    }
+  }
+</style>
