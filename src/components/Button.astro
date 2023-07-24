@@ -1,0 +1,58 @@
+---
+type Props = {
+  variant?: 'primary' | 'secondary'
+  size?: 'sm' | 'md'
+  classes?: string
+}
+
+const { variant = 'secondary', classes, size } = Astro.props
+---
+
+<button
+  class:list={[
+    'button',
+    classes,
+    {
+      'button--primary': variant === 'primary',
+      'button--secondary': variant === 'secondary',
+      'button--sm': size === 'sm',
+      'button--md': size === 'md',
+    },
+  ]}
+>
+  <slot />
+</button>
+
+<style>
+  .button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: currentColor;
+    cursor: pointer;
+  }
+
+  .button--primary {
+    padding: 0 1em;
+    background-color: var(--orange-500);
+    color: var(--white);
+    border-radius: 7.1428em;
+  }
+
+  .button--sm {
+    font-size: calc(var(--font-size-14) / 16 * 1rem);
+    height: 2.2857em;
+  }
+
+  .button--md {
+    font-size: calc(var(--font-size-14) / 16 * 1rem);
+    height: 2.2857em;
+  }
+
+  @media (min-width: calc(var(--viewport-min) / 16 * 1rem)) {
+    .button--md {
+      font-size: calc(var(--font-size-16) / 16 * 1rem);
+      height: 3em;
+    }
+  }
+</style>

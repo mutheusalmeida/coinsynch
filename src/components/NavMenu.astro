@@ -1,5 +1,6 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types'
+import Button from './Button.astro'
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>
 
@@ -15,12 +16,16 @@ const { as: Tag, ...props } = Astro.props
   <ul class="list">
     <li class="list__item"><a href="#about-us">About us</a></li>
     <li class="list__item"><a href="#top-cyptos">Top cryptos</a></li>
-    <li class="list__item"><button>Sign in</button></li>
-    <li class="list__item"><button>Sign up</button></li>
+    <li class="list__item"><Button>Sign in</Button></li>
+    <li class="list__item">
+      <Button classes="button--sign-up" size="md" variant="primary">
+        Sign up
+      </Button>
+    </li>
   </ul>
 </Tag>
 
-<style>
+<style is:global>
   .list {
     padding: 0;
     display: flex;
@@ -35,5 +40,9 @@ const { as: Tag, ...props } = Astro.props
         text-decoration: none;
       }
     }
+  }
+
+  .button--sign-up {
+    min-width: 7.1428em;
   }
 </style>
