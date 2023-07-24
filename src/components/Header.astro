@@ -19,6 +19,12 @@ import MainNav from './MainMenu.astro'
 <style>
   .header {
     min-height: var(--header-height-sm);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: var(--white);
   }
 
   .header__container {

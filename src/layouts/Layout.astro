@@ -1,5 +1,5 @@
 ---
-import '@/styles/reset.css';
+import '@/styles/reset.css'
 
 type Props = {
   title?: string
@@ -132,6 +132,13 @@ const {
       'Helvetica Neue',
       sans-serif;
     color: var(--text-color);
+  }
+
+  body.no-scroll {
+    overflow-y: scroll;
+    position: fixed;
+    left: 0;
+    right: 0;
   }
 
   .fluid-type {

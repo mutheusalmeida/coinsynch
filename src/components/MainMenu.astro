@@ -12,22 +12,24 @@ import { Image } from '@astrojs/image/components'
   </nav>
 
   <div data-js="modal" class="modal">
-    <button data-js="close-modal" class="modal__close">
-      <Image src={closeIcon} alt="Close" />
-    </button>
+    <div class="modal__content">
+      <button data-js="close-modal" class="modal__close">
+        <Image src={closeIcon} alt="Close" />
+      </button>
 
-    <nav
-      class="nav normal-type"
-      style="--font-size: var(--font-size-14)"
-      aria-label="Main navigation"
-    >
-      <ul class="nav__list">
-        <li class="nav__item">About us</li>
-        <li class="nav__item">Top cryptos</li>
-        <li class="nav__item">Sign in</li>
-        <li class="nav__item">Sign up</li>
-      </ul>
-    </nav>
+      <nav
+        class="normal-type"
+        style="--font-size: var(--font-size-14)"
+        aria-label="Main navigation"
+      >
+        <ul class="list">
+          <li class="list__item"><a href="#about-us">About us</a></li>
+          <li class="list__item"><a href="#top-cyptos">Top cryptos</a></li>
+          <li class="list__item"><button>Sign in</button></li>
+          <li class="list__item"><button>Sign up</button></li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
 
@@ -42,10 +44,12 @@ import { Image } from '@astrojs/image/components'
     display: flex;
   }
 
-  .main-menu__menu-hamburger {
+  .main-menu__menu-hamburger,
+  .modal__close {
     background-color: transparent;
     padding: 0;
     border: none;
+    width: max-content;
   }
 
   .modal {
@@ -54,14 +58,14 @@ import { Image } from '@astrojs/image/components'
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.95);
     overflow: hidden;
     visibility: hidden;
     opacity: 0;
     transition:
       visibility 0.25s ease-in,
       opacity 0.25s ease-in;
-    z-index: 10;
+    z-index: 15;
   }
 
   .modal.active {
@@ -69,7 +73,27 @@ import { Image } from '@astrojs/image/components'
     opacity: 1;
   }
 
-  .nav {
+  .modal__content {
+    padding: 1.25em 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+  }
+
+  .list {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    & .list__item {
+      list-style: none;
+      line-height: var(--line-height-14);
+
+      & a {
+        text-decoration: none;
+      }
+    }
   }
 </style>
 
@@ -78,14 +102,22 @@ import { Image } from '@astrojs/image/components'
   const closeModal = document.querySelector('[data-js="close-modal"]')
   const modal = document.querySelector('[data-js="modal"]')
 
-  const open = () => {
-    modal?.classList.add('active')
+  const close = (rect: DOMRect) => {
+    modal?.classList.remove('active')
+    document.body.classList.remove('no-scroll')
+    document.body.style.removeProperty('top')
+    document.documentElement.scrollTop = Math.abs(rect.top)
   }
 
-  const close = () => {
-    modal?.classList.remove('active')
+  const open = () => {
+    modal?.classList.add('active')
+
+    const rect = document.body.getBoundingClientRect()
+    document.body.classList.add('no-scroll')
+    document.body.style.top = `${rect.top}px`
+
+    closeModal?.addEventListener('click', () => close(rect))
   }
 
   modalHamburger?.addEventListener('click', open)
-  closeModal?.addEventListener('click', close)
 </script>
