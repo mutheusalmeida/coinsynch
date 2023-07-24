@@ -1,0 +1,45 @@
+---
+import logo from '@/assets/logo.svg'
+import { Image } from '@astrojs/image/components'
+import MainNav from './MainMenu.astro'
+---
+
+<header class="header">
+  <div class="header__container">
+    <a href="/" class="header__site-logo">
+      <Image src={logo} alt="CoinSynch" />
+    </a>
+
+    <MainNav />
+  </div>
+
+  <div class="header__cryptos">cryptos</div>
+</header>
+
+<style>
+  .header {
+    min-height: var(--header-height-sm);
+  }
+
+  .header__container {
+    display: grid;
+    grid-template-columns: var(--col-sm);
+    grid-template-rows: var(--row);
+    align-items: center;
+    padding: 1em 1em calc(1rem - 1px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .header__site-logo {
+    grid-column: 1 / 3;
+
+    & img {
+      width: 5.875rem;
+      height: 1rem;
+    }
+  }
+
+  .header__cryptos {
+    box-shadow: var(--box-shadow);
+  }
+</style>

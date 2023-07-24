@@ -1,0 +1,91 @@
+---
+import menuIcon from '@/assets/menu-icon.svg'
+import closeIcon from '@/assets/close-icon.svg'
+import { Image } from '@astrojs/image/components'
+---
+
+<div class="main-menu">
+  <nav class="main-menu__wrapper">
+    <button data-js="modal-hamburger" class="main-menu__menu-hamburger">
+      <Image src={menuIcon} alt="Menu hamburger" />
+    </button>
+  </nav>
+
+  <div data-js="modal" class="modal">
+    <button data-js="close-modal" class="modal__close">
+      <Image src={closeIcon} alt="Close" />
+    </button>
+
+    <nav
+      class="nav normal-type"
+      style="--font-size: var(--font-size-14)"
+      aria-label="Main navigation"
+    >
+      <ul class="nav__list">
+        <li class="nav__item">About us</li>
+        <li class="nav__item">Top cryptos</li>
+        <li class="nav__item">Sign in</li>
+        <li class="nav__item">Sign up</li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .main-menu {
+    grid-column: 4 / 5;
+    display: flex;
+    justify-self: end;
+  }
+
+  .main-menu__wrapper {
+    display: flex;
+  }
+
+  .main-menu__menu-hamburger {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+  }
+
+  .modal {
+    width: 100%;
+    height: 100svh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      visibility 0.25s ease-in,
+      opacity 0.25s ease-in;
+    z-index: 10;
+  }
+
+  .modal.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .nav {
+  }
+</style>
+
+<script>
+  const modalHamburger = document.querySelector('[data-js="modal-hamburger"')
+  const closeModal = document.querySelector('[data-js="close-modal"]')
+  const modal = document.querySelector('[data-js="modal"]')
+
+  const open = () => {
+    modal?.classList.add('active')
+  }
+
+  const close = () => {
+    modal?.classList.remove('active')
+  }
+
+  modalHamburger?.addEventListener('click', open)
+  closeModal?.addEventListener('click', close)
+</script>

@@ -1,4 +1,6 @@
 ---
+import '@/styles/reset.css';
+
 type Props = {
   title?: string
 }
@@ -107,6 +109,12 @@ const {
 
     --viewport-min: 768;
     --viewport-max: 1440;
+
+    --header-height-sm: 81px;
+    --header-height-md: 84px;
+    --header-height-lg: 64px;
+
+    --box-shadow: : 0px 4px 8px 0px rgba(77, 77, 77, 0.1);
   }
 
   body {
@@ -123,9 +131,10 @@ const {
       'Open Sans',
       'Helvetica Neue',
       sans-serif;
+    color: var(--text-color);
   }
 
-  .fluid {
+  .fluid-type {
     --fluid-calc: clamp(
       calc((var(--font-size-min) / 16) * 1rem),
       calc(
@@ -143,5 +152,9 @@ const {
       calc((var(--font-size-max) / 16) * 1rem)
     );
     font-size: var(--fluid-calc);
+  }
+
+  .normal-type {
+    font-size: calc(var(--font-size) / 16 * 1rem);
   }
 </style>
