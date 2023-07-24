@@ -3,17 +3,27 @@ type Props = {
   title?: string
 }
 
-const { title = 'Coinsynch page' } = Astro.props
+const {
+  title = 'CoinSynch - Cryptocurrency Exchange, Buy and Sell Bitcoin, Ethereum, and more',
+} = Astro.props
 ---
 
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
   <head>
-    <meta charset='UTF-8' />
-    <meta name='description' content='Coinsynch description' />
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <meta name='generator' content={Astro.generator} />
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Buy and sell cryptocurrencies on CoinSynch. Platform designed to deliver the ultimate trading experience."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#FBAB34" />
+    <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
 
