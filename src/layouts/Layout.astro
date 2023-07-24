@@ -25,9 +25,123 @@ const {
     <meta name="theme-color" content="#FBAB34" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
     <slot />
   </body>
 </html>
+
+<style is:global>
+  :root {
+    --dark: #000;
+    --white: #fff;
+    --text-color: #5d6670;
+
+    --gray-100: #f6f6f6;
+    --gray-200: #f4f3f8;
+    --gray-300: #e0deea;
+    --gray-400: #acabb7;
+    --gray-500: #8c8a97;
+    --gray-600: #716f7a;
+    --gray-700: #5f5c6b;
+    --gray-800: #4e4b59;
+    --gray-900: #33303e;
+    --orange-100: #fff6e8;
+    --orange-200: #ffe1b5;
+    --orange-300: #ffcd82;
+    --orange-400: #ffb94f;
+    --orange-500: #fbab34;
+    --orange-600: #e09422;
+    --orange-700: #ad721a;
+    --orange-800: #7a4e0c;
+    --orange-900: #472c04;
+    --green-100: #e8faf1;
+    --green-200: #d1f6e3;
+    --green-300: #a4edc6;
+    --green-400: #8de8b8;
+    --green-500: #1bd171;
+    --green-600: #18b863;
+    --green-700: #149e55;
+    --green-800: #0e6b3a;
+    --green-900: #07381e;
+    --red-100: #fff2f3;
+    --red-200: #ffcfd0;
+    --red-300: #ff9497;
+    --red-400: #fa7d80;
+    --red-500: #ec3237;
+    --red-600: #d42d31;
+    --red-700: #a12226;
+    --red-800: #6e171a;
+    --red-900: #3b0c0e;
+
+    --col-sm: repeat(4, 1fr);
+    --col-md: repeat(8, 1fr);
+    --col-lg: repeat(12, 1fr);
+    --row: auto;
+
+    --font-family-primary: 'Roboto';
+
+    --font-size-12: 12;
+    --font-size-14: 14;
+    --font-size-16: 16;
+    --font-size-20: 20;
+    --font-size-24: 24;
+    --font-size-32: 32;
+    --font-size-40: 40;
+    --font-size-48: 48;
+
+    --line-height-14: 1.1428;
+    --line-height-24: 1.5;
+    --line-height-24-base-20: 1.2;
+    --line-height-32: 1.3333;
+    --line-height-40: 1.25;
+    --line-height-48: 1.2;
+    --line-height-56: 1.1666;
+
+    --viewport-min: 768;
+    --viewport-max: 1440;
+  }
+
+  body {
+    font-family:
+      var(--font-family-primary),
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
+  }
+
+  .fluid {
+    --fluid-calc: clamp(
+      calc((var(--font-size-min) / 16) * 1rem),
+      calc(
+        (
+            100 * (var(--font-size-48) - var(--font-size-20)) /
+              (var(--viewport-max) - var(--viewport-min)) * 1vw
+          ) +
+          (
+            (
+                var(--viewport-min) * var(--font-size-48) - var(--viewport-max) *
+                  var(--font-size-20)
+              ) / (600 - var(--viewport-max)) / 16
+          ) * 1rem
+      ),
+      calc((var(--font-size-max) / 16) * 1rem)
+    );
+    font-size: var(--fluid-calc);
+  }
+</style>

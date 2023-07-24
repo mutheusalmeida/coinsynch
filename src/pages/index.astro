@@ -4,8 +4,20 @@ import Layout from '../layouts/Layout.astro'
 
 <Layout>
   <main>
-    <h1>Home page</h1>
+    <h1
+      class="fluid title"
+      style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-48);"
+    >
+      Start buying and selling cryptocurrency today
+    </h1>
 
     <a href="/dashboard">Go to dashboard</a>
   </main>
 </Layout>
+
+<style>
+  .title {
+    max-width: 12.2916em;
+    color: var(--orange-500);
+  }
+</style>
