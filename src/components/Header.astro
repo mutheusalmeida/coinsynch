@@ -5,7 +5,7 @@ import MainNav from './MainMenu.astro'
 ---
 
 <header class="header">
-  <div class="header__container">
+  <div class="header__container fluid-p fluid-px">
     <a href="/" class="header__site-logo">
       <Image src={logo} alt="CoinSynch" />
     </a>
@@ -32,7 +32,8 @@ import MainNav from './MainMenu.astro'
     grid-template-columns: var(--col-sm);
     grid-template-rows: var(--row);
     align-items: center;
-    padding: 1em 1em calc(1rem - 1px);
+    padding-top: 1em;
+    padding-bottom: calc(1rem - 1px);
     border-bottom: 1px solid var(--gray-200);
   }
 

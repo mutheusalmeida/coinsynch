@@ -98,6 +98,8 @@ const {
     --font-size-32: 32;
     --font-size-40: 40;
     --font-size-48: 48;
+    --font-size-min: var(--font-size-14);
+    --font-size-max: var(--font-size-16);
 
     --line-height-14: 1.1428;
     --line-height-24: 1.5;
@@ -109,6 +111,9 @@ const {
 
     --viewport-min: 768;
     --viewport-max: 1440;
+
+    --p-max: 7rem;
+    --p-min: 1rem;
 
     --header-height-sm: 81px;
     --header-height-md: 84px;
@@ -146,13 +151,13 @@ const {
       calc((var(--font-size-min) / 16) * 1rem),
       calc(
         (
-            100 * (var(--font-size-48) - var(--font-size-20)) /
+            100 * (var(--font-size-max) - var(--font-size-min)) /
               (var(--viewport-max) - var(--viewport-min)) * 1vw
           ) +
           (
             (
-                var(--viewport-min) * var(--font-size-48) - var(--viewport-max) *
-                  var(--font-size-20)
+                var(--viewport-min) * var(--font-size-max) - var(--viewport-max) *
+                  var(--font-size-min)
               ) / (600 - var(--viewport-max)) / 16
           ) * 1rem
       ),
@@ -163,5 +168,22 @@ const {
 
   .normal-type {
     font-size: calc(var(--font-size) / 16 * 1rem);
+  }
+
+  .fluid-p {
+    --fluid-padding: max(
+      min(var(--p-max), calc((100% - 20rem) / 8)),
+      var(--p-min)
+    );
+  }
+
+  .fluid-py {
+    padding-top: var(--fluid-padding);
+    padding-bottom: var(--fluid-padding);
+  }
+
+  .fluid-px {
+    padding-left: var(--fluid-padding);
+    padding-right: var(--fluid-padding);
   }
 </style>
