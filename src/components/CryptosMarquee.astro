@@ -1,9 +1,54 @@
 ---
+import { formatCurrency, getVariationRate } from '@/utils'
+
 type Props = {
   classes?: string
 }
 
+type newData = { rate: number; asset_id_base: string; asset_id_quote: string }
+
+type oldData = { rate_low: number }
+
+type DataType = [newData, oldData]
+
+const assets = ['BTC', 'ETH', 'XRP']
+
+type RequestDataType = [newData, oldData[]]
+
 const { classes } = Astro.props
+
+const assetsPromises = assets.map(async (asset) => {
+  const ratesPromises = [
+    fetch(`https://rest.coinapi.io/v1/exchangerate/${asset}/USD`, {
+      headers: { 'X-CoinAPI-Key': 'C69F287F-AA6C-4F6E-9345-506EE21B2A80' },
+    }).then((res) => res.json()),
+    fetch(
+      `https://rest.coinapi.io/v1/exchangerate/${asset}/USD/history?period_id=1HRS&limit=1`,
+      {
+        headers: { 'X-CoinAPI-Key': 'C69F287F-AA6C-4F6E-9345-506EE21B2A80' },
+      }
+    ).then((res) => res.json()),
+  ]
+
+  const data = Promise.all(ratesPromises)
+
+  return await data
+})
+
+const response = Promise.all(assetsPromises)
+
+const data = (await response) as unknown as RequestDataType[]
+
+const assetsFormated = data.map((asset) => {
+  const [newData, oldData] = asset.flat() as unknown as DataType
+
+  return {
+    assetLabel: newData.asset_id_base,
+    assetQuote: newData.asset_id_quote,
+    rate: formatCurrency(newData.rate),
+    variation: getVariationRate(newData.rate, oldData.rate_low).slice(0, -1),
+  }
+})
 ---
 
 <div
@@ -11,57 +56,28 @@ const { classes } = Astro.props
   style="--font-size-min: var(--font-size-12); --font-size-max: var(--font-size-14);"
 >
   <div class="cryptos-marquee__container">
-    <div class="cryptos-marquee__content">
-      <div class="cryptos-marquee__item">
-        <span class="cryptos-marquee__coin">BIT</span>
+    {
+      [...new Array(2)].map(() => (
+        <div class="cryptos-marquee__content">
+          {assetsFormated.map((asset) => (
+            <div class="cryptos-marquee__item">
+              <span class="cryptos-marquee__coin">{asset.assetLabel}</span>
 
-        <span>R$ 23,62</span>
+              <span>{asset.rate}</span>
 
-        <span class="cryptos-marquee--rise">+7,082</span>
-      </div>
-
-      <div class="cryptos-marquee__item">
-        <span class="cryptos-marquee__coin">BIT</span>
-
-        <span>R$ 8,62</span>
-
-        <span class="cryptos-marquee--drop">-5,230</span>
-      </div>
-
-      <div class="cryptos-marquee__item">
-        <span class="cryptos-marquee__coin">BIT</span>
-
-        <span>R$ 8,62</span>
-
-        <span class="cryptos-marquee--drop">-5,230</span>
-      </div>
-    </div>
-
-    <div class="cryptos-marquee__content">
-      <div class="cryptos-marquee__item">
-        <span class="cryptos-marquee__coin">BIT</span>
-
-        <span>R$ 23,62</span>
-
-        <span class="cryptos-marquee--rise">+7,082</span>
-      </div>
-
-      <div class="cryptos-marquee__item">
-        <span class="cryptos-marquee__coin">BIT</span>
-
-        <span>R$ 8,62</span>
-
-        <span class="cryptos-marquee--drop">-5,230</span>
-      </div>
-
-      <div class="cryptos-marquee__item">
-        <span class="cryptos-marquee__coin">BIT</span>
-
-        <span>R$ 8,62</span>
-
-        <span class="cryptos-marquee--drop">-5,230</span>
-      </div>
-    </div>
+              <span
+                class:list={{
+                  'cryptos-marquee--rise': asset.variation.startsWith('+'),
+                  'cryptos-marquee--drop': asset.variation.startsWith('-'),
+                }}
+              >
+                {asset.variation}
+              </span>
+            </div>
+          ))}
+        </div>
+      ))
+    }
   </div>
 </div>
 
