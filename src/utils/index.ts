@@ -9,7 +9,7 @@ export function getVariationRate(
     ...options,
   }
   const formatedRate = new Intl.NumberFormat('en-US', opt).format(
-    (newValue / oldValue - 1) * 100
+    newValue / oldValue - 1
   )
 
   return formatedRate.startsWith('-') ? formatedRate : `+${formatedRate}`

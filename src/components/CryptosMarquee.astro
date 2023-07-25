@@ -7,7 +7,7 @@ type Props = {
 
 type newData = { rate: number; asset_id_base: string; asset_id_quote: string }
 
-type oldData = { rate_low: number }
+type oldData = { rate_close: number }
 
 type DataType = [newData, oldData]
 
@@ -19,13 +19,15 @@ const { classes } = Astro.props
 
 const assetsPromises = assets.map(async (asset) => {
   const ratesPromises = [
-    fetch(`https://rest.coinapi.io/v1/exchangerate/${asset}/USD`, {
-      headers: { 'X-CoinAPI-Key': 'C69F287F-AA6C-4F6E-9345-506EE21B2A80' },
+    fetch(`${import.meta.env.COINAPI_BASE_URL}/exchangerate/${asset}/USD`, {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
     }).then((res) => res.json()),
     fetch(
-      `https://rest.coinapi.io/v1/exchangerate/${asset}/USD/history?period_id=1HRS&limit=1`,
+      `${
+        import.meta.env.COINAPI_BASE_URL
+      }/exchangerate/${asset}/USD/history?period_id=1HRS&limit=1`,
       {
-        headers: { 'X-CoinAPI-Key': 'C69F287F-AA6C-4F6E-9345-506EE21B2A80' },
+        headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
       }
     ).then((res) => res.json()),
   ]
@@ -46,7 +48,7 @@ const assetsFormated = data.map((asset) => {
     assetLabel: newData.asset_id_base,
     assetQuote: newData.asset_id_quote,
     rate: formatCurrency(newData.rate),
-    variation: getVariationRate(newData.rate, oldData.rate_low).slice(0, -1),
+    variation: getVariationRate(newData.rate, oldData.rate_close).slice(0, -1),
   }
 })
 ---
