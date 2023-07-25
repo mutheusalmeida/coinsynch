@@ -42,13 +42,24 @@ import Button from './Button.astro'
 
         <Image src={arrowIcon} alt="Arrow" />
       </Button>
+
+      <div
+        class="tags fluid-type fluid-spacing fluid-mt"
+        style="--font-size-min: var(--font-size-12); --font-size-max: var(--font-size-20); --spacing-min: 1.5rem; --spacing-max: 5rem;"
+      >
+        <div class="tags__item">Cryptos</div>
+
+        <div class="tags__item">NFTs</div>
+
+        <div class="tags__item">Games</div>
+      </div>
     </div>
   </div>
 </section>
 
 <style is:global>
   .hero {
-    min-height: calc(100svh - var(--header-height-sm));
+    min-height: calc(100svh - var(--header-height));
     background-image: url('../assets/wave.svg');
     background-repeat: no-repeat;
     background-position-x: 50%;
@@ -85,8 +96,25 @@ import Button from './Button.astro'
     min-width: 12.8571em;
   }
 
+  .tags {
+    display: flex;
+    gap: 1em;
+  }
+
+  .tags__item {
+    padding: 0 1.333em;
+    color: var(--orange-500);
+    background-color: var(--orange-100);
+    border-radius: 0.3333em;
+    min-height: 1.8333em;
+    display: flex;
+    align-items: center;
+  }
+
   @media (min-width: 48em) {
     .hero {
+      --header-height: 85px;
+
       background-size: auto 314px;
       background-position-x: 25%;
       background-position-y: 115%;
@@ -106,10 +134,16 @@ import Button from './Button.astro'
       min-height: 2.2857em;
       line-height: var(--line-height-40);
     }
+
+    .tags {
+      gap: 1.5em;
+    }
   }
 
   @media (min-width: 90em) {
     .button--sign-up-hero {
+      --header-height: 64px;
+
       min-width: 17.375em;
       min-height: 3em;
       line-height: var(--line-height-56);
@@ -123,6 +157,16 @@ import Button from './Button.astro'
       & p {
         max-width: 29.5em;
       }
+    }
+
+    .tags {
+      gap: 2em;
+    }
+
+    .tags__item {
+      padding: 0 0.8em;
+      border-radius: 0.2em;
+      min-height: 2em;
     }
   }
 </style>

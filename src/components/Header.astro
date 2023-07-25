@@ -13,7 +13,7 @@ import MainNav from './MainMenu.astro'
     <MainNav />
   </div>
 
-  <div class="header__cryptos">cryptos</div>
+  <div class="header__cryptos header__cryptos--bottom">cryptos</div>
 </header>
 
 <style>
@@ -33,7 +33,7 @@ import MainNav from './MainMenu.astro'
     grid-template-rows: var(--row);
     align-items: center;
     padding-top: 1em;
-    padding-bottom: calc(1rem - 1px);
+    padding-bottom: calc(1em - 1px);
     border-bottom: 1px solid var(--gray-200);
   }
 
@@ -47,13 +47,16 @@ import MainNav from './MainMenu.astro'
     }
   }
 
-  .header__cryptos {
-    box-shadow: var(--box-shadow);
+  .header__cryptos--bottom {
+    font-size: 12px;
+    height: 24px;
   }
 
   @media (min-width: 48em) {
     .header__container {
       grid-template-columns: var(--col-md);
+      padding-top: 0.875em;
+      padding-bottom: 0.875em;
     }
 
     .header__site-logo {
@@ -67,6 +70,13 @@ import MainNav from './MainMenu.astro'
   @media (min-width: 90em) {
     .header__container {
       grid-template-columns: var(--col-lg);
+      padding-top: 1em;
+      padding-bottom: 1em;
+      border: none;
+    }
+
+    .header__cryptos--bottom {
+      display: none;
     }
 
     .header__site-logo {
