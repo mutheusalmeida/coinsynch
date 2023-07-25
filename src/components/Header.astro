@@ -39,6 +39,7 @@ import MainNav from './MainMenu.astro'
 
   .header__site-logo {
     grid-column: 1 / 3;
+    width: max-content;
 
     & img {
       width: 5.875rem;
@@ -48,5 +49,31 @@ import MainNav from './MainMenu.astro'
 
   .header__cryptos {
     box-shadow: var(--box-shadow);
+  }
+
+  @media (min-width: 48em) {
+    .header__container {
+      grid-template-columns: var(--col-md);
+    }
+
+    .header__site-logo {
+      & img {
+        width: 7.75rem;
+        height: 1.3125rem;
+      }
+    }
+  }
+
+  @media (min-width: 90em) {
+    .header__container {
+      grid-template-columns: var(--col-lg);
+    }
+
+    .header__site-logo {
+      & img {
+        width: 7.75rem;
+        height: 1.3125rem;
+      }
+    }
   }
 </style>

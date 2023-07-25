@@ -2,20 +2,23 @@
 import type { HTMLTag, Polymorphic } from 'astro/types'
 import Button from './Button.astro'
 
-type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag; classes?: string }>
 
-const { as: Tag, ...props } = Astro.props
+const { as: Tag, classes, ...props } = Astro.props
 ---
 
 <Tag
   {...props}
-  class="normal-type"
+  class:list={['nav', 'normal-type', classes]}
   style="--font-size: var(--font-size-14)"
   aria-label="Main navigation"
 >
   <ul class="list">
     <li class="list__item"><a href="#about-us">About us</a></li>
     <li class="list__item"><a href="#top-cyptos">Top cryptos</a></li>
+  </ul>
+
+  <ul class="list">
     <li class="list__item"><Button>Sign in</Button></li>
     <li class="list__item">
       <Button classes="button--sign-up" size="sm" variant="primary">
@@ -26,6 +29,13 @@ const { as: Tag, ...props } = Astro.props
 </Tag>
 
 <style is:global>
+  .nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+  }
+
   .list {
     padding: 0;
     display: flex;
@@ -36,6 +46,7 @@ const { as: Tag, ...props } = Astro.props
     & .list__item {
       list-style: none;
       line-height: var(--line-height-14);
+      white-space: nowrap;
 
       & a {
         text-decoration: none;

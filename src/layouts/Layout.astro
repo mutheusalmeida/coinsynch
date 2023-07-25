@@ -172,7 +172,7 @@ const {
 
   .fluid-spacing {
     --fluid-spacing-calc: max(
-      min(var(--spacing-max), calc((100% - 20rem) / 8)),
+      min(var(--spacing-max), calc((100vw - (20rem - var(--spacing-max))) / 8)),
       var(--spacing-min)
     );
   }

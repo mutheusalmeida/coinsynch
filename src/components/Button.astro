@@ -4,9 +4,16 @@ type Props = {
   size?: 'sm' | 'md'
   classes?: string
   style?: string
+  textTransform?: 'uppercase'
 }
 
-const { variant = 'secondary', classes, size, style } = Astro.props
+const {
+  variant = 'secondary',
+  textTransform = 'lowercase',
+  classes,
+  size,
+  style,
+} = Astro.props
 ---
 
 <button
@@ -19,6 +26,7 @@ const { variant = 'secondary', classes, size, style } = Astro.props
       'button--secondary': variant === 'secondary',
       'button--sm': size === 'sm',
       'button--md': size === 'md',
+      'button--uppercase': textTransform === 'uppercase',
     },
   ]}
 >
@@ -34,6 +42,10 @@ const { variant = 'secondary', classes, size, style } = Astro.props
     cursor: pointer;
     max-width: min-content;
     min-width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 
   .button--primary {
@@ -53,7 +65,23 @@ const { variant = 'secondary', classes, size, style } = Astro.props
     min-height: 2.2857em;
   }
 
+  .button--uppercase {
+    text-transform: uppercase;
+  }
+
   @media (min-width: 48em) {
+    .button {
+      gap: 10px;
+    }
+
+    .button--primary {
+      padding: 0 1.5em;
+    }
+
+    .button--md {
+      font-weight: 700;
+    }
+
     .button--md {
       font-size: calc(var(--font-size-16) / 16 * 1rem);
       min-height: 3em;

@@ -1,37 +1,48 @@
 ---
+import arrowIcon from '@/assets/arrow-icon.svg'
+import { Image } from '@astrojs/image/components'
 import Button from './Button.astro'
 ---
 
 <section class="hero" aria-label="Hero section">
   <div
-    class="hero__content fluid-spacing fluid-py"
-    style="--spacing-min: 3.5rem; --spacing-max: 10rem;"
+    class="fluid-spacing fluid-px"
+    style="--spacing-min: 1.5rem; --spacing-max: 7rem;"
   >
-    <div class="hero__content-wrapper">
-      <h1
-        class="fluid-type fluid-spacing fluid-mb hero__title"
-        style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-48); --spacing-min: 0.5rem; --spacing-max: 1.5rem;"
-      >
-        Start buying and selling cryptocurrency today
-      </h1>
-
-      <p
-        class="fluid-type"
-        style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-20);"
-      >
-        CoinSynch is the safest place to buy, sell, and hold cryptocurrency.
-        Sign up and get started now.
-      </p>
-    </div>
-
-    <Button
-      size="md"
-      variant="primary"
-      classes="button--sign-up-hero fluid-type"
-      style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+    <div
+      class="hero__content fluid-spacing fluid-pt"
+      style="--spacing-min: 3.5rem; --spacing-max: 10rem;"
     >
-      Sign up now
-    </Button>
+      <div class="hero__content-wrapper">
+        <h1
+          class="fluid-type fluid-spacing fluid-mb hero__title"
+          style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-48); --spacing-min: 0.5rem; --spacing-max: 1.5rem;"
+        >
+          Start buying and selling cryptocurrency today
+        </h1>
+
+        <p
+          class="fluid-type"
+          style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-20);"
+        >
+          CoinSynch is the safest platform for buying, selling, transferring,
+          and storing cryptocurrency, and is trusted worldwide. Sign up and get
+          started now.
+        </p>
+      </div>
+
+      <Button
+        size="md"
+        variant="primary"
+        textTransform="uppercase"
+        classes="button--sign-up-hero fluid-type"
+        style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+      >
+        Sign up now
+
+        <Image src={arrowIcon} alt="Arrow" />
+      </Button>
+    </div>
   </div>
 </section>
 
@@ -58,6 +69,10 @@ import Button from './Button.astro'
 
   .hero__content-wrapper {
     text-align: center;
+
+    & p {
+      max-width: 22.8571em;
+    }
   }
 
   .hero__title {
@@ -77,6 +92,15 @@ import Button from './Button.astro'
       background-position-y: 115%;
     }
 
+    .hero__content-wrapper {
+      text-align: start;
+    }
+
+    .hero__content,
+    .hero__content-wrapper {
+      align-items: flex-start;
+    }
+
     .button--sign-up-hero {
       min-width: 14.5em;
       min-height: 2.2857em;
@@ -89,6 +113,16 @@ import Button from './Button.astro'
       min-width: 17.375em;
       min-height: 3em;
       line-height: var(--line-height-56);
+    }
+
+    .hero__content {
+      gap: 2em;
+    }
+
+    .hero__content-wrapper {
+      & p {
+        max-width: 29.5em;
+      }
     }
   }
 </style>

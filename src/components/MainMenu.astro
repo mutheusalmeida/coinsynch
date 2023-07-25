@@ -10,6 +10,8 @@ import NavMenu from './NavMenu.astro'
     <button data-js="modal-hamburger" class="main-menu__menu-hamburger">
       <Image src={menuIcon} alt="Menu hamburger" />
     </button>
+
+    <NavMenu classes="nav--visible" as="div" />
   </nav>
 
   <div data-js="modal" class="modal">
@@ -25,7 +27,7 @@ import NavMenu from './NavMenu.astro'
   </div>
 </div>
 
-<style>
+<style is:global>
   .main-menu {
     grid-column: 4 / 5;
     display: flex;
@@ -83,6 +85,47 @@ import NavMenu from './NavMenu.astro'
     display: flex;
     flex-direction: column;
     gap: 3em;
+  }
+
+  .nav--visible {
+    display: none;
+  }
+
+  @media (min-width: 48em) {
+    .main-menu {
+      grid-column: 3 / 9;
+      width: 100%;
+    }
+
+    .main-menu__wrapper {
+      width: 100%;
+    }
+
+    .modal.active {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .main-menu__menu-hamburger {
+      display: none;
+    }
+
+    .nav--visible {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+
+      & ul {
+        flex-direction: row;
+      }
+    }
+  }
+
+  @media (min-width: 90em) {
+    .main-menu {
+      grid-column: 3 / 13;
+    }
   }
 </style>
 
