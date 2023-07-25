@@ -6,7 +6,7 @@ import Button from './Button.astro'
 
 <section class="hero" aria-label="Hero section">
   <div
-    class="fluid-spacing fluid-px"
+    class="hero__container fluid-spacing fluid-px"
     style="--spacing-min: 1.5rem; --spacing-max: 7rem;"
   >
     <div class="hero__content">
@@ -68,6 +68,10 @@ import Button from './Button.astro'
     align-items: center;
   }
 
+  .hero__container {
+    grid-column: 1 / -1;
+  }
+
   .hero__content,
   .hero__content-wrapper {
     display: flex;
@@ -77,7 +81,6 @@ import Button from './Button.astro'
 
   .hero__content {
     gap: 1.5em;
-    grid-column: 1 / -1;
   }
 
   .hero__content-wrapper {

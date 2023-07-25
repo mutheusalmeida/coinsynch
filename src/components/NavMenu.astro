@@ -50,6 +50,11 @@ const { as: Tag, classes, ...props } = Astro.props
 
       & a {
         text-decoration: none;
+        transition: opacity 0.2s ease;
+      }
+
+      & a:hover {
+        opacity: 0.8;
       }
     }
   }
