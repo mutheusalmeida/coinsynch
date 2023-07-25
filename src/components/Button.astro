@@ -48,11 +48,11 @@ const {
     gap: 8px;
     transition-duration: 0.2s;
     transition-timing-function: ease;
+    transition-property: color, background-color;
   }
 
   .button--secondary:hover {
-    transition-property: opacity;
-    opacity: 0.8;
+    color: var(--gray-400);
   }
 
   .button--primary {
@@ -60,16 +60,11 @@ const {
     background-color: var(--orange-500);
     color: var(--white);
     border-radius: 7.1428em;
-    transition-property: color, background-color;
   }
 
   .button--primary:hover {
     color: var(--gray-200);
     background-color: var(--orange-600);
-
-    & img {
-      opacity: 0.9;
-    }
   }
 
   .button--sm {
