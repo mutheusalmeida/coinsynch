@@ -112,8 +112,8 @@ const {
     --viewport-min: 768;
     --viewport-max: 1440;
 
-    --p-max: 7rem;
-    --p-min: 1rem;
+    --spacing-max: 7rem;
+    --spacing-min: 1rem;
 
     --header-height-sm: 81px;
     --header-height-md: 84px;
@@ -158,7 +158,7 @@ const {
             (
                 var(--viewport-min) * var(--font-size-max) - var(--viewport-max) *
                   var(--font-size-min)
-              ) / (600 - var(--viewport-max)) / 16
+              ) / (var(--viewport-min) - var(--viewport-max)) / 16
           ) * 1rem
       ),
       calc((var(--font-size-max) / 16) * 1rem)
@@ -170,20 +170,32 @@ const {
     font-size: calc(var(--font-size) / 16 * 1rem);
   }
 
-  .fluid-p {
-    --fluid-padding: max(
-      min(var(--p-max), calc((100% - 20rem) / 8)),
-      var(--p-min)
+  .fluid-spacing {
+    --fluid-spacing-calc: max(
+      min(var(--spacing-max), calc((100% - 20rem) / 8)),
+      var(--spacing-min)
     );
   }
 
   .fluid-py {
-    padding-top: var(--fluid-padding);
-    padding-bottom: var(--fluid-padding);
+    padding-top: var(--fluid-spacing-calc);
+    padding-bottom: var(--fluid-spacing-calc);
+  }
+
+  .fluid-pt {
+    padding-top: var(--fluid-spacing-calc);
+  }
+
+  .fluid-mb {
+    margin-bottom: var(--fluid-spacing-calc);
+  }
+
+  .fluid-pt {
+    padding-top: var(--fluid-spacing-calc);
   }
 
   .fluid-px {
-    padding-left: var(--fluid-padding);
-    padding-right: var(--fluid-padding);
+    padding-left: var(--fluid-spacing-calc);
+    padding-right: var(--fluid-spacing-calc);
   }
 </style>

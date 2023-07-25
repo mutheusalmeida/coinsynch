@@ -3,12 +3,14 @@ type Props = {
   variant?: 'primary' | 'secondary'
   size?: 'sm' | 'md'
   classes?: string
+  style?: string
 }
 
-const { variant = 'secondary', classes, size } = Astro.props
+const { variant = 'secondary', classes, size, style } = Astro.props
 ---
 
 <button
+  style={style}
   class:list={[
     'button',
     classes,
@@ -30,6 +32,8 @@ const { variant = 'secondary', classes, size } = Astro.props
     padding: 0;
     color: currentColor;
     cursor: pointer;
+    max-width: min-content;
+    min-width: max-content;
   }
 
   .button--primary {
@@ -41,18 +45,18 @@ const { variant = 'secondary', classes, size } = Astro.props
 
   .button--sm {
     font-size: calc(var(--font-size-14) / 16 * 1rem);
-    height: 2.2857em;
+    min-height: 2.2857em;
   }
 
   .button--md {
     font-size: calc(var(--font-size-14) / 16 * 1rem);
-    height: 2.2857em;
+    min-height: 2.2857em;
   }
 
-  @media (min-width: calc(var(--viewport-min) / 16 * 1rem)) {
+  @media (min-width: 48em) {
     .button--md {
       font-size: calc(var(--font-size-16) / 16 * 1rem);
-      height: 3em;
+      min-height: 3em;
     }
   }
 </style>
