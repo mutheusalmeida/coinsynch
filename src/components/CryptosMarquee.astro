@@ -1,0 +1,125 @@
+---
+type Props = {
+  classes?: string
+}
+
+const { classes } = Astro.props
+---
+
+<div
+  class:list={['cryptos-marquee', 'fluid-type', classes]}
+  style="--font-size-min: var(--font-size-12); --font-size-max: var(--font-size-14);"
+>
+  <div class="cryptos-marquee__container">
+    <div class="cryptos-marquee__content">
+      <div class="cryptos-marquee__item">
+        <span class="cryptos-marquee__coin">BIT</span>
+
+        <span>R$ 23,62</span>
+
+        <span class="cryptos-marquee--rise">+7,082</span>
+      </div>
+
+      <div class="cryptos-marquee__item">
+        <span class="cryptos-marquee__coin">BIT</span>
+
+        <span>R$ 8,62</span>
+
+        <span class="cryptos-marquee--drop">-5,230</span>
+      </div>
+
+      <div class="cryptos-marquee__item">
+        <span class="cryptos-marquee__coin">BIT</span>
+
+        <span>R$ 8,62</span>
+
+        <span class="cryptos-marquee--drop">-5,230</span>
+      </div>
+    </div>
+
+    <div class="cryptos-marquee__content">
+      <div class="cryptos-marquee__item">
+        <span class="cryptos-marquee__coin">BIT</span>
+
+        <span>R$ 23,62</span>
+
+        <span class="cryptos-marquee--rise">+7,082</span>
+      </div>
+
+      <div class="cryptos-marquee__item">
+        <span class="cryptos-marquee__coin">BIT</span>
+
+        <span>R$ 8,62</span>
+
+        <span class="cryptos-marquee--drop">-5,230</span>
+      </div>
+
+      <div class="cryptos-marquee__item">
+        <span class="cryptos-marquee__coin">BIT</span>
+
+        <span>R$ 8,62</span>
+
+        <span class="cryptos-marquee--drop">-5,230</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes marquee {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -100%;
+    }
+  }
+
+  .cryptos-marquee {
+    padding: 0 0.6666em;
+    min-height: 2em;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+  }
+
+  .cryptos-marquee__container {
+    width: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    animation: marquee 8s linear infinite;
+  }
+
+  .cryptos-marquee__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 100%;
+  }
+
+  .cryptos-marquee__content {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+  }
+
+  .cryptos-marquee__item {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .cryptos-marquee__coin {
+    color: var(--gray-800);
+  }
+
+  .cryptos-marquee--rise {
+    color: var(--green-700);
+  }
+
+  .cryptos-marquee--drop {
+    color: var(--red-700);
+  }
+</style>
