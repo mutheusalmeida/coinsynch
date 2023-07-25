@@ -11,13 +11,15 @@ import MainNav from './MainMenu.astro'
       <Image src={logo} alt="CoinSynch" />
     </a>
 
+    <CryptosMarquee classes="cryptos-marquee--desktop" />
+
     <MainNav />
   </div>
 
-  <CryptosMarquee />
+  <CryptosMarquee classes="cryptos-marquee--mobile" />
 </header>
 
-<style>
+<style is:global>
   .header {
     min-height: var(--header-height-sm);
     position: sticky;
@@ -48,9 +50,8 @@ import MainNav from './MainMenu.astro'
     }
   }
 
-  .header__cryptos--bottom {
-    font-size: 12px;
-    height: 24px;
+  .cryptos-marquee--desktop {
+    display: none;
   }
 
   @media (min-width: 48em) {
@@ -66,6 +67,12 @@ import MainNav from './MainMenu.astro'
         height: 1.3125rem;
       }
     }
+
+    .cryptos-marquee--mobile {
+      & > div {
+        animation-duration: 10s;
+      }
+    }
   }
 
   @media (min-width: 90em) {
@@ -76,15 +83,22 @@ import MainNav from './MainMenu.astro'
       border: none;
     }
 
-    .header__cryptos--bottom {
-      display: none;
-    }
-
     .header__site-logo {
       & img {
         width: 7.75rem;
         height: 1.3125rem;
       }
+    }
+
+    .cryptos-marquee--desktop {
+      display: initial;
+      box-shadow: none;
+      grid-column: 6 / 11;
+      grid-row: 1 / 2;
+    }
+
+    .cryptos-marquee--mobile {
+      display: none;
     }
   }
 </style>

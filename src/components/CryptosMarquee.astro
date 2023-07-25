@@ -76,7 +76,6 @@ const { classes } = Astro.props
   }
 
   .cryptos-marquee {
-    padding: 0 0.6666em;
     min-height: 2em;
     box-shadow: var(--box-shadow);
     overflow: hidden;
@@ -98,11 +97,17 @@ const { classes } = Astro.props
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     height: 100%;
+
+    & > div:not(:last-child) {
+      margin-right: 2em;
+    }
   }
 
   .cryptos-marquee__content {
     display: flex;
     align-items: center;
+    max-width: 100vw;
+    overflow: hidden;
     gap: 2em;
   }
 
