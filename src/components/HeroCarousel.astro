@@ -3,6 +3,9 @@ import '@/styles/embla.css'
 
 import man from '@/assets/happy-man-using-a-smartphone.webp'
 import woman from '@/assets/happy-woman-standing-using-a-tablet.webp'
+import btcIcon from '@/assets/btc-icon.svg'
+import chartIcon from '@/assets/chart-icon.svg'
+import devicesIcon from '@/assets/devices-icon.svg'
 import { Image } from '@astrojs/image/components'
 ---
 
@@ -16,10 +19,34 @@ import { Image } from '@astrojs/image/components'
             fit="contain"
             alt="Happy woman standing using a tablet"
           />
+
+          <div class="floating-card floating-card--btc">
+            <Image
+              src={btcIcon}
+              aspectRatio="square"
+              alt="Bitcoin floating card"
+            />
+          </div>
+
+          <div class="floating-card floating-card--chart">
+            <Image
+              src={chartIcon}
+              aspectRatio="square"
+              alt="Chart floating card"
+            />
+          </div>
         </div>
       </div>
       <div class="embla__slide">
         <div class="content">
+          <div class="floating-card floating-card--devices">
+            <Image
+              src={devicesIcon}
+              aspectRatio="square"
+              alt="Chart floating card"
+            />
+          </div>
+
           <Image src={man} fit="contain" alt="happy-man-using-a-smartphone" />
         </div>
       </div>
@@ -43,9 +70,53 @@ import { Image } from '@astrojs/image/components'
   }
 
   .content {
+    position: relative;
+
     & img {
       height: 100%;
+      -webkit-user-drag: none;
     }
+  }
+
+  .floating-card {
+    --offset-shadow: 14px;
+
+    min-width: 2.8125em;
+    min-height: 2.8125em;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.5em;
+    background-color: var(--orange-100);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--box-shadow-md);
+
+    & img {
+      width: 90%;
+      -webkit-user-drag: none;
+    }
+  }
+
+  .floating-card--btc {
+    top: 15%;
+
+    /* give room for shadow */
+    left: var(--offset-shadow);
+  }
+
+  .floating-card--chart {
+    bottom: 20%;
+
+    /* give room for shadow */
+    right: var(--offset-shadow);
+  }
+
+  .floating-card--devices {
+    top: 26%;
+
+    /* give room for shadow */
+    left: var(--offset-shadow);
   }
 
   @media (min-width: 48em) {
@@ -59,8 +130,12 @@ import { Image } from '@astrojs/image/components'
     }
 
     .content {
+      box-sizing: content-box;
       max-height: var(--slide-height);
       max-width: 13.4375em;
+
+      /* calc padding for shadow: (card width / 2 + offset-shadow) / 16  */
+      padding: 0 2.28125em;
     }
   }
 
@@ -74,6 +149,14 @@ import { Image } from '@astrojs/image/components'
 
     .content {
       max-width: 24em;
+
+      /* calc padding for shadow: (card width / 2 + offset-shadow) / 16  */
+      padding: 0 3.375em;
+    }
+
+    .floating-card {
+      min-width: 5em;
+      min-height: 5em;
     }
   }
 </style>
@@ -84,7 +167,8 @@ import { Image } from '@astrojs/image/components'
   const options: EmblaOptionsType = {
     align: 'end',
     containScroll: 'trimSnaps',
-    inViewThreshold: 0.69,
+    inViewThreshold: 0.7,
+    watchDrag: false,
   }
 
   const emblaNode = document.querySelector<HTMLElement>(
@@ -110,4 +194,12 @@ import { Image } from '@astrojs/image/components'
   }
 
   emblaApi.on('select', onSelect)
+
+  document.addEventListener('scroll', () => {
+    if (document.body.getBoundingClientRect().y > -80) {
+      emblaApi.scrollTo(0)
+    } else {
+      emblaApi.scrollTo(1)
+    }
+  })
 </script>
