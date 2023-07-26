@@ -1,0 +1,285 @@
+---
+import '@/styles/embla.css'
+
+import btcIcon from '@/assets/btc-icon.svg'
+import chartIcon from '@/assets/chart-icon.svg'
+import devicesIcon from '@/assets/devices-icon.svg'
+import nodeIcon from '@/assets/node-icon.svg'
+import { Image } from '@astrojs/image/components'
+
+const data = [
+  {
+    icon: btcIcon,
+  },
+  {
+    icon: nodeIcon,
+  },
+  {
+    icon: chartIcon,
+  },
+  {
+    icon: devicesIcon,
+  },
+]
+---
+
+<div
+  data-js="slide-about"
+  class="embla fluid-spacing fluid-mt"
+  style="--spacing-min: 1.5rem; --spacing-max: 2rem;"
+>
+  <div
+    data-js="slide-viewport-about"
+    class="embla__viewport fluid-spacing fluid-px"
+    style="--spacing-min: 2.5rem; --spacing-max: 7rem;"
+  >
+    <div class="embla__container">
+      {
+        data.map(({ icon }) => (
+          <div class="embla__slide">
+            <div class="card">
+              <Image
+                class="card__icon"
+                src={icon}
+                aspectRatio="square"
+                alt="Bitcoin icon"
+              />
+
+              <h4
+                class="card__subtitle fluid-type"
+                style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+              >
+                For your company
+              </h4>
+
+              <h5
+                class="card__title fluid-type"
+                style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
+              >
+                Crypto Solutions
+              </h5>
+
+              <p class="card__desc">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                aliquam.
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="cards">
+      <div class="cards__wrapper">
+        {
+          data.slice(0, 2).map(({ icon }) => (
+            <div class="card">
+              <Image
+                class="card__icon"
+                src={icon}
+                aspectRatio="square"
+                alt="Bitcoin icon"
+              />
+
+              <h4
+                class="card__subtitle fluid-type"
+                style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+              >
+                For your company
+              </h4>
+
+              <h5
+                class="card__title fluid-type"
+                style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
+              >
+                Crypto Solutions
+              </h5>
+
+              <p class="card__desc">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                aliquam.
+              </p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="cards__wrapper">
+        {
+          data.slice(2, 4).map(({ icon }) => (
+            <div class="card">
+              <Image
+                class="card__icon"
+                src={icon}
+                aspectRatio="square"
+                alt="Bitcoin icon"
+              />
+
+              <h4
+                class="card__subtitle fluid-type"
+                style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+              >
+                For your company
+              </h4>
+
+              <h5
+                class="card__title fluid-type"
+                style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
+              >
+                Crypto Solutions
+              </h5>
+
+              <p class="card__desc">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                aliquam.
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .embla {
+    --slide-spacing: 1em;
+    --slide-size: 78.3%;
+
+    grid-column: 1 / -1;
+    grid-row: 2 / 3;
+  }
+
+  .embla__container {
+    & > div:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .embla__viewport {
+    padding-bottom: 3.5em;
+  }
+
+  .card {
+    min-width: 12.5em;
+    min-height: 16.25em;
+    padding: 1.5em;
+    box-shadow: var(--box-shadow-lg);
+  }
+
+  .card__icon {
+    width: 2.5em;
+    height: 2.5em;
+    margin-bottom: 1em;
+  }
+
+  .card__subtitle {
+    color: var(--orange-500);
+    line-height: var(--line-height-16);
+    margin-bottom: 0.25rem;
+  }
+
+  .card__title {
+    line-height: var(--line-height-32);
+    margin-bottom: 0.5rem;
+  }
+
+  .card__desc {
+    font-size: 0.875rem;
+    line-height: var(--line-height-24);
+  }
+
+  .cards {
+    display: none;
+    width: max-content;
+    margin: 0 auto;
+
+    & > div:nth-child(2) {
+      justify-content: flex-end;
+    }
+  }
+
+  .cards__wrapper {
+    display: flex;
+    width: 45.5em;
+    max-width: 100%;
+    gap: 1.5em;
+  }
+
+  @media (min-width: 31.25em) {
+    .embla {
+      --slide-size: 68.3%;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .embla {
+      --slide-spacing: 1.5em;
+    }
+
+    .embla__container {
+      display: none !important;
+    }
+
+    .card {
+      min-width: 17.5em;
+      max-width: 17.5em;
+      min-height: 16.75em;
+    }
+
+    .card__icon {
+      width: 2.4em;
+      height: 2.4em;
+    }
+
+    .card__subtitle {
+      line-height: var(--line-height-24);
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 90em) {
+    .embla {
+      --slide-spacing: 2em;
+      grid-column: 1 / 8;
+      grid-row: 1 / 2;
+    }
+
+    .embla__viewport {
+      padding-right: 0 !important;
+    }
+
+    .card__title {
+      margin-bottom: 1rem;
+    }
+
+    .cards__wrapper {
+      gap: 2em;
+    }
+  }
+</style>
+
+<script>
+  import EmblaCarousel, { EmblaOptionsType } from 'embla-carousel'
+
+  const options: EmblaOptionsType = {
+    align: 'center',
+    containScroll: 'trimSnaps',
+    breakpoints: {
+      '(min-width: 48em)': { active: false },
+    },
+  }
+
+  const emblaNode = document.querySelector<HTMLElement>(
+    '[data-js="slide-about"]'
+  )!
+  const viewportNode = emblaNode.querySelector<HTMLElement>(
+    '[data-js="slide-viewport-about"]'
+  )!
+  EmblaCarousel(viewportNode, options)
+</script>

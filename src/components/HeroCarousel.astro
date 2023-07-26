@@ -10,7 +10,7 @@ import { Image } from '@astrojs/image/components'
 ---
 
 <div data-js="slide-hero" class="embla">
-  <div class="embla__viewport">
+  <div data-js="slide-viewport-hero" class="embla__viewport">
     <div class="embla__container">
       <div class="embla__slide">
         <div class="content">
@@ -174,7 +174,9 @@ import { Image } from '@astrojs/image/components'
   const emblaNode = document.querySelector<HTMLElement>(
     '[data-js="slide-hero"]'
   )!
-  const viewportNode = emblaNode.querySelector<HTMLElement>('.embla__viewport')!
+  const viewportNode = emblaNode.querySelector<HTMLElement>(
+    '[data-js="slide-viewport-hero"]'
+  )!
   const emblaApi = EmblaCarousel(viewportNode, options)
   const slides = emblaApi.slideNodes()
 

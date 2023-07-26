@@ -1,8 +1,39 @@
 ---
-
+import AboutCarousel from './AboutCarousel.astro'
 ---
 
-<section class="about" aria-label="About section"></section>
+<section class="about" aria-label="About section">
+  <div
+    class="about__header fluid-spacing fluid-px"
+    style="--spacing-min: 1rem; --spacing-max: 7rem;"
+  >
+    <div class="about__header-wrapper">
+      <h2
+        class="fluid-type"
+        style="--font-size-min: var(--font-size-16); --font-size-max: var(--font-size-20);"
+      >
+        About CoinSync
+      </h2>
+
+      <h3
+        class="fluid-type"
+        style="--font-size-min: var(--font-size-24); --font-size-max: var(--font-size-32);"
+      >
+        We are building the cryptoeconomy
+      </h3>
+
+      <p
+        class="fluid-type"
+        style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+      >
+        We started in 2012 with the radical idea that anyone, anywhere, should
+        be able to easily and securely send and receive Bitcoin.
+      </p>
+    </div>
+  </div>
+
+  <AboutCarousel />
+</section>
 
 <style>
   .about {
@@ -11,5 +42,66 @@
     grid-template-columns: var(--col-sm);
     grid-template-rows: var(--row);
     align-items: center;
+    align-content: center;
+  }
+
+  .about__header {
+    grid-column: 1 / -1;
+
+    & h2 {
+      color: var(--orange-500);
+      margin-bottom: 0.25rem;
+    }
+
+    & h3 {
+      line-height: var(--line-height-32);
+      margin-bottom: 1rem;
+    }
+
+    & h2,
+    & p {
+      line-height: var(--line-height-24);
+    }
+  }
+
+  .about__header-wrapper {
+    margin: 0 auto;
+  }
+
+  @media (min-width: 48em) {
+    .about {
+      grid-template-columns: var(--col-md);
+    }
+
+    .about__header {
+      & h3 {
+        line-height: var(--line-height-40);
+      }
+    }
+
+    .about__header-wrapper {
+      max-width: 30.875em;
+    }
+  }
+
+  @media (min-width: 90em) {
+    .about {
+      grid-template-columns: var(--col-lg);
+    }
+
+    .about__header {
+      grid-column: 8 / 13;
+      grid-row: 1 / 2;
+      padding-left: 2em !important;
+
+      & h3 {
+        line-height: var(--line-height-48);
+        letter-spacing: -0.4px;
+      }
+    }
+
+    .about__header-wrapper {
+      max-width: 100%;
+    }
   }
 </style>

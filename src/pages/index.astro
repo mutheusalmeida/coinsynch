@@ -6,7 +6,15 @@ import Layout from '@/layouts/Layout.astro'
 ---
 
 <Layout>
-  <Header />
-  <Hero />
-  <About />
+  <div class="container">
+    <Header />
+    <Hero />
+    <About />
+  </div>
 </Layout>
+
+<style>
+  .container {
+    min-height: 100%;
+  }
+</style>
