@@ -2,6 +2,7 @@
 import arrowIcon from '@/assets/arrow-icon.svg'
 import { Image } from '@astrojs/image/components'
 import Button from './Button.astro'
+import HeroCarousel from './HeroCarousel.astro'
 ---
 
 <section class="hero" aria-label="Hero section">
@@ -52,6 +53,8 @@ import Button from './Button.astro'
       </div>
     </div>
   </div>
+
+  <HeroCarousel />
 </section>
 
 <style is:global>
@@ -70,6 +73,7 @@ import Button from './Button.astro'
 
   .hero__container {
     grid-column: 1 / -1;
+    grid-row: 1 / 2;
   }
 
   .hero__content,

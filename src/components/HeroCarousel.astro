@@ -1,0 +1,113 @@
+---
+import '@/styles/embla.css'
+
+import man from '@/assets/happy-man-using-a-smartphone.webp'
+import woman from '@/assets/happy-woman-standing-using-a-tablet.webp'
+import { Image } from '@astrojs/image/components'
+---
+
+<div data-js="slide-hero" class="embla">
+  <div class="embla__viewport">
+    <div class="embla__container">
+      <div class="embla__slide">
+        <div class="content">
+          <Image
+            src={woman}
+            fit="contain"
+            alt="Happy woman standing using a tablet"
+          />
+        </div>
+      </div>
+      <div class="embla__slide">
+        <div class="content">
+          <Image src={man} fit="contain" alt="happy-man-using-a-smartphone" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .embla {
+    display: none;
+    grid-row: 1 / 2;
+  }
+
+  .embla__slide {
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .embla__slide--active {
+    opacity: 1;
+  }
+
+  .content {
+    & img {
+      height: 100%;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .embla {
+      --slide-spacing: 4.1875em;
+      --slide-height: 17.5rem;
+      --slide-size: 70%;
+
+      display: inline;
+      grid-column: 6 / -1;
+    }
+
+    .content {
+      max-height: var(--slide-height);
+      max-width: 13.4375em;
+    }
+  }
+
+  @media (min-width: 90em) {
+    .embla {
+      --slide-spacing: 7.5em;
+      --slide-height: 31.1875em;
+
+      grid-column: 8 / 13;
+    }
+
+    .content {
+      max-width: 24em;
+    }
+  }
+</style>
+
+<script>
+  import EmblaCarousel, { EmblaOptionsType } from 'embla-carousel'
+
+  const options: EmblaOptionsType = {
+    align: 'end',
+    containScroll: 'trimSnaps',
+    inViewThreshold: 0.69,
+  }
+
+  const emblaNode = document.querySelector<HTMLElement>(
+    '[data-js="slide-hero"]'
+  )!
+  const viewportNode = emblaNode.querySelector<HTMLElement>('.embla__viewport')!
+  const emblaApi = EmblaCarousel(viewportNode, options)
+  const slides = emblaApi.slideNodes()
+
+  const handleActiveEle = () => {
+    const inViewIndex = emblaApi.slidesInView(true)[0]
+    const inViewNode = slides[inViewIndex]
+
+    slides.forEach((slide) => slide.classList.remove('embla__slide--active'))
+
+    inViewNode.classList.add('embla__slide--active')
+  }
+
+  handleActiveEle()
+
+  const onSelect = () => {
+    handleActiveEle()
+  }
+
+  emblaApi.on('select', onSelect)
+</script>
