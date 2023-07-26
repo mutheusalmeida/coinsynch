@@ -11,6 +11,13 @@ type oldData = { rate_close: number }
 
 type DataType = [newData, oldData]
 
+type FomatedData = {
+  assetLabel: string
+  assetQuote: string
+  rate: string
+  variation: string
+}
+
 const assets = ['BTC', 'ETH', 'XRP']
 
 type RequestDataType = [newData, oldData[]]
@@ -37,20 +44,30 @@ const assetsPromises = assets.map(async (asset) => {
   return await data
 })
 
-const response = Promise.all(assetsPromises)
+let hasError = false
+let assetsFormated: FomatedData[] | null = null
 
-const data = (await response) as unknown as RequestDataType[]
+try {
+  const response = Promise.all(assetsPromises)
 
-const assetsFormated = data.map((asset) => {
-  const [newData, oldData] = asset.flat() as unknown as DataType
+  const data = (await response) as unknown as RequestDataType[]
 
-  return {
-    assetLabel: newData.asset_id_base,
-    assetQuote: newData.asset_id_quote,
-    rate: formatCurrency(newData.rate),
-    variation: getVariationRate(newData.rate, oldData.rate_close).slice(0, -1),
-  }
-})
+  assetsFormated = data.map((asset) => {
+    const [newData, oldData] = asset.flat() as unknown as DataType
+
+    return {
+      assetLabel: newData.asset_id_base,
+      assetQuote: newData.asset_id_quote,
+      rate: formatCurrency(newData.rate),
+      variation: getVariationRate(newData.rate, oldData.rate_close).slice(
+        0,
+        -1
+      ),
+    }
+  })
+} catch (err) {
+  hasError = true
+}
 ---
 
 <div
@@ -59,26 +76,32 @@ const assetsFormated = data.map((asset) => {
 >
   <div class="cryptos-marquee__container">
     {
-      [...new Array(2)].map(() => (
-        <div class="cryptos-marquee__content">
-          {assetsFormated.map((asset) => (
-            <div class="cryptos-marquee__item">
-              <span class="cryptos-marquee__coin">{asset.assetLabel}</span>
+      assetsFormated ? (
+        [...new Array(2)].map(() => (
+          <div class="cryptos-marquee__content">
+            {assetsFormated?.map((asset) => (
+              <div class="cryptos-marquee__item">
+                <span class="cryptos-marquee__coin">{asset.assetLabel}</span>
 
-              <span>{asset.rate}</span>
+                <span>{asset.rate}</span>
 
-              <span
-                class:list={{
-                  'cryptos-marquee--rise': asset.variation.startsWith('+'),
-                  'cryptos-marquee--drop': asset.variation.startsWith('-'),
-                }}
-              >
-                {asset.variation}
-              </span>
-            </div>
-          ))}
-        </div>
-      ))
+                <span
+                  class:list={{
+                    'cryptos-marquee--rise': asset.variation.startsWith('+'),
+                    'cryptos-marquee--drop': asset.variation.startsWith('-'),
+                  }}
+                >
+                  {asset.variation}
+                </span>
+              </div>
+            ))}
+          </div>
+        ))
+      ) : hasError ? (
+        <span>Can't load exchange rate</span>
+      ) : (
+        <span>Loading...</span>
+      )
     }
   </div>
 </div>
