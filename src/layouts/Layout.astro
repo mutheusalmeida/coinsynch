@@ -1,5 +1,5 @@
 ---
-import '@/styles/reset.css'
+import '@/styles/reset.css';
 
 type Props = {
   title?: string
@@ -202,6 +202,29 @@ const {
   .fluid-px {
     padding-left: var(--fluid-spacing-calc);
     padding-right: var(--fluid-spacing-calc);
+  }
+
+  .expander {
+    --transition-duration: 0.3s;
+
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows var(--transition-duration) ease;
+  }
+
+  .expander-content {
+    min-height: 0;
+    transition: visibility 1s;
+    visibility: hidden;
+  }
+
+  .expander.expanded {
+    grid-template-rows: 1fr;
+  }
+
+  .expander.expanded .expander-content {
+    visibility: visible;
   }
 
   @media (min-width: 48em) {

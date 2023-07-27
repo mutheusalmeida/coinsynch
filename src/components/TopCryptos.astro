@@ -1,5 +1,8 @@
 ---
+import { Image } from '@astrojs/image/components'
 import TopCryptosItem from './TopCryptosItem.astro'
+import minusIcon from '@/assets/minus-icon.svg'
+import plusIcon from '@/assets/plus-icon.svg'
 
 // assets that we want
 const assets = [
@@ -135,14 +138,44 @@ const data = assets
 
       <div class="cryptos-tbody">
         {
-          data.map((asset) => (
-            <TopCryptosItem
-              name={asset.asset_name}
-              url={asset.url}
-              id={asset.asset_id}
-            />
+          data.slice(0, 5).map((asset) => (
+            <div>
+              <TopCryptosItem
+                name={asset.asset_name}
+                url={asset.url}
+                id={asset.asset_id}
+              />
+            </div>
           ))
         }
+
+        <div
+          data-js="expander-list"
+          class="expander"
+          style="--transition-duration: 0.4s;"
+        >
+          <div class="expander-content">
+            {
+              data.slice(5, 10).map((asset) => (
+                <div>
+                  <TopCryptosItem
+                    name={asset.asset_name}
+                    url={asset.url}
+                    id={asset.asset_id}
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <button class="cryptos-tbody__view-more" data-js="expander-list-toggle">
+          <span class="text">View more</span>
+
+          <Image class="plus" src={plusIcon} alt="Expand icon" />
+
+          <Image class="minus" src={minusIcon} alt="Expand icon" />
+        </button>
       </div>
     </div>
   </div>
@@ -175,6 +208,35 @@ const data = assets
 
   .cryptos-tbody {
     margin-top: 0.5em;
+
+    & > div:nth-child(-n + 5):nth-child(even) {
+      background-color: var(--gray-100);
+    }
+  }
+
+  .expander-content {
+    & div:nth-child(odd) {
+      background-color: var(--gray-100);
+    }
+  }
+
+  .cryptos-tbody__view-more {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1rem;
+    line-height: var(--line-height-24);
+    color: var(--orange-500);
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 1em;
+    cursor: pointer;
+
+    & .minus {
+      display: none;
+    }
   }
 
   @media (min-width: 48em) {
@@ -192,3 +254,30 @@ const data = assets
     }
   }
 </style>
+
+<script>
+  const expander = document.querySelector('[data-js="expander-list"]')
+  const toggle = document.querySelector('[data-js="expander-list-toggle"]')
+
+  if (toggle && expander) {
+    toggle.addEventListener('click', () => {
+      expander.classList.toggle('expanded')
+      const iconMinus = toggle.querySelector<HTMLImageElement>('.minus')
+      const iconPlus = toggle.querySelector<HTMLImageElement>('.plus')
+      const text = toggle.querySelector<HTMLImageElement>('.text')
+
+      if (iconMinus && iconPlus && text) {
+        if (expander.classList.contains('expanded')) {
+          text.textContent = 'View less'
+
+          iconMinus.style.display = 'initial'
+          iconPlus.style.display = 'none'
+        } else {
+          text.textContent = 'View more'
+          iconMinus.style.display = 'none'
+          iconPlus.style.display = 'Initial'
+        }
+      }
+    })
+  }
+</script>

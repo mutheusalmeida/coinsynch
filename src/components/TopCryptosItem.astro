@@ -12,7 +12,7 @@ const { name, url, id } = Astro.props
 ---
 
 <div data-id={id} data-js="crypto-expandable">
-  <div data-js="toggle" class="cryptos-tbody__header border-bottom">
+  <div data-js="toggle" class="cryptos-tbody__header">
     <div class="cryptos-tbody__crypto">
       <Image
         class="cryptos-tbody__crypto-icon"
@@ -67,6 +67,7 @@ const { name, url, id } = Astro.props
     justify-content: space-between;
     align-items: center;
     padding: 1em;
+    cursor: pointer;
   }
 
   .cryptos-thead__th {
@@ -104,7 +105,7 @@ const { name, url, id } = Astro.props
     transform: rotate(-90deg);
   }
 
-  .border-bottom {
+  .cryptos-tbody__header.border-bottom {
     border-bottom: 1px solid var(--gray-200);
   }
 
@@ -119,27 +120,6 @@ const { name, url, id } = Astro.props
       justify-content: space-between;
       align-items: center;
     }
-  }
-
-  .expander {
-    display: grid;
-    grid-template-rows: 0fr;
-    overflow: hidden;
-    transition: grid-template-rows 0.4s ease;
-  }
-
-  .expander-content {
-    min-height: 0;
-    transition: visibility 1s;
-    visibility: hidden;
-  }
-
-  .expander.expanded {
-    grid-template-rows: 1fr;
-  }
-
-  .expander.expanded .expander-content {
-    visibility: visible;
   }
 
   .cryptos-tbody__td {
@@ -194,10 +174,13 @@ const { name, url, id } = Astro.props
       const expander = crypto?.querySelector('[data-js="expander"]')
       const arrowIcon = crypto?.querySelector('[data-js="arrow-icon"]')
 
-      toggle?.addEventListener('click', () => {
-        expander?.classList.toggle('expanded')
-        arrowIcon?.classList.toggle('rotated')
-      })
+      if (toggle && expander) {
+        toggle.addEventListener('click', () => {
+          expander.classList.toggle('expanded')
+          toggle.classList.toggle('border-bottom')
+          arrowIcon?.classList.toggle('rotated')
+        })
+      }
     }
   })
 </script>
