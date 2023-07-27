@@ -1,5 +1,6 @@
 ---
 import AboutCarousel from './AboutCarousel.astro'
+import Button from './Button.astro'
 ---
 
 <section class="about" aria-label="About section">
@@ -29,13 +30,22 @@ import AboutCarousel from './AboutCarousel.astro'
         We started in 2012 with the radical idea that anyone, anywhere, should
         be able to easily and securely send and receive Bitcoin.
       </p>
+
+      <Button
+        size="md"
+        variant="primary"
+        classes="button--about-header fluid-type"
+        style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+      >
+        Sign up now
+      </Button>
     </div>
   </div>
 
   <AboutCarousel />
 </section>
 
-<style>
+<style is:global>
   .about {
     min-height: calc(100svh - var(--header-height));
     display: grid;
@@ -66,6 +76,13 @@ import AboutCarousel from './AboutCarousel.astro'
 
   .about__header-wrapper {
     margin: 0 auto;
+  }
+
+  .button--about-header {
+    display: none;
+    max-width: 11em;
+    font-weight: 400;
+    margin-top: 2.5em;
   }
 
   @media (min-width: 48em) {
@@ -102,6 +119,10 @@ import AboutCarousel from './AboutCarousel.astro'
 
     .about__header-wrapper {
       max-width: 100%;
+    }
+
+    .button--about-header {
+      display: flex;
     }
   }
 </style>

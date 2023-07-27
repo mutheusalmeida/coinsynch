@@ -1,26 +1,12 @@
 ---
+import type {
+  DataType,
+  FomatedDataType,
+  RequestDataType,
+} from '@/resources/types'
 import { formatCurrency, getVariationRate } from '@/utils'
 
-type Props = {
-  classes?: string
-}
-
-type newData = { rate: number; asset_id_base: string; asset_id_quote: string }
-
-type oldData = { rate_close: number }
-
-type DataType = [newData, oldData]
-
-type FomatedData = {
-  assetLabel: string
-  assetQuote: string
-  rate: string
-  variation: string
-}
-
 const assets = ['BTC', 'ETH', 'XRP']
-
-type RequestDataType = [newData, oldData[]]
 
 const { classes } = Astro.props
 
@@ -45,7 +31,7 @@ const assetsPromises = assets.map(async (asset) => {
 })
 
 let hasError = false
-let assetsFormated: FomatedData[] | null = null
+let assetsFormated: FomatedDataType[] | null = null
 
 try {
   const response = Promise.all(assetsPromises)
