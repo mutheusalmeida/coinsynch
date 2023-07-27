@@ -1,0 +1,203 @@
+---
+import arrowFlatIcon from '@/assets/arrow-flat-icon.svg'
+import { Image } from '@astrojs/image/components'
+
+type Props = {
+  name: string
+  url: string
+  id: string
+}
+
+const { name, url, id } = Astro.props
+---
+
+<div data-id={id} data-js="crypto-expandable">
+  <div data-js="toggle" class="cryptos-tbody__header border-bottom">
+    <div class="cryptos-tbody__crypto">
+      <Image
+        class="cryptos-tbody__crypto-icon"
+        width={32}
+        height={32}
+        src={url}
+        quality={1}
+        alt="Crypto icon"
+      />
+
+      <h4
+        class="cryptos-tbody__crypto-name fluid-type"
+        style="--font-size-min: var(--font-size-12); --font-size-max: var(--font-size-16);"
+      >
+        {name}
+        <span>{id}</span>
+      </h4>
+    </div>
+
+    <Image
+      data-js="arrow-icon"
+      class="cryptos-tbody__arrow"
+      width={16}
+      height={16}
+      src={arrowFlatIcon}
+      alt="Arrow icon"
+    />
+  </div>
+
+  <div data-js="expander" class="expander">
+    <div class="expander-content">
+      <div class="cryptos-tbody__details">
+        <div>
+          <span class="cryptos-thead__th">Price</span>
+
+          <span class="cryptos-tbody__td">US$ 25,499.52</span>
+        </div>
+
+        <div>
+          <span class="cryptos-thead__th">Change</span>
+
+          <span class="cryptos-tbody__td cryptos-tbody__td--rise">+5,65%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cryptos-tbody__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+  }
+
+  .cryptos-thead__th {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    line-height: var(--line-height-14);
+  }
+
+  .cryptos-tbody__crypto-icon {
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  .cryptos-tbody__crypto {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .cryptos-tbody__crypto-name {
+    font-weight: 400;
+    line-height: var(--line-height-14-base-12);
+
+    & span {
+      color: var(--gray-500);
+    }
+  }
+
+  .cryptos-tbody__arrow {
+    transform: rotate(90deg);
+    transition: transform 0.2s ease-in;
+  }
+
+  .cryptos-tbody__arrow.rotated {
+    transform: rotate(-90deg);
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .cryptos-tbody__details {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .expander {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.4s ease;
+  }
+
+  .expander-content {
+    min-height: 0;
+    transition: visibility 1s;
+    visibility: hidden;
+  }
+
+  .expander.expanded {
+    grid-template-rows: 1fr;
+  }
+
+  .expander.expanded .expander-content {
+    visibility: visible;
+  }
+
+  .cryptos-tbody__td {
+    font-size: 0.875rem;
+    line-height: var(--line-height-14);
+  }
+
+  .cryptos-tbody__td--rise {
+    color: var(--green-700);
+  }
+
+  .cryptos-tbody__td--drop {
+    color: var(--red-700);
+  }
+
+  @media (min-width: 48em) {
+    .cryptos-thead__th {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      line-height: var(--line-height-16);
+    }
+
+    .cryptos-tbody__crypto-icon {
+      width: 2em;
+      height: 2em;
+    }
+
+    .cryptos-tbody__crypto {
+      display: flex;
+      gap: 1em;
+    }
+
+    .cryptos-tbody__td {
+      font-size: 1rem;
+      line-height: var(--line-height-24);
+    }
+  }
+
+  @media (min-width: 90em) {
+    .cryptos-tbody__crypto-name {
+      line-height: var(--line-height-24);
+    }
+  }
+</style>
+
+<script define:vars={{ id }}>
+  const cryptoNodes = document.querySelectorAll('[data-js="crypto-expandable"]')
+
+  cryptoNodes.forEach((crypto) => {
+    if (crypto.dataset.id === id) {
+      const toggle = crypto?.querySelector('[data-js="toggle"]')
+      const expander = crypto?.querySelector('[data-js="expander"]')
+      const arrowIcon = crypto?.querySelector('[data-js="arrow-icon"]')
+
+      toggle?.addEventListener('click', () => {
+        expander?.classList.toggle('expanded')
+        arrowIcon?.classList.toggle('rotated')
+      })
+    }
+  })
+</script>

@@ -1,97 +1,194 @@
 ---
-// type AssetsDataType = Pick<FomatedDataType, 'rate' | 'variation'> & {
-//   asset_icon: string
-//   asset_name: string
-//   asset_id: string
-// }
+import TopCryptosItem from './TopCryptosItem.astro'
 
-// const assets = [
-//   {
-//     asset_name: 'Bitcoin',
-//     asset_id: 'BTC',
-//   },
-//   {
-//     asset_name: 'Ethereum',
-//     asset_id: 'ETH',
-//   },
-//   {
-//     asset_name: 'Tether USDT',
-//     asset_id: 'USDT',
-//   },
-//   {
-//     asset_name: 'XRP',
-//     asset_id: 'XRP',
-//   },
-//   {
-//     asset_name: 'Bitcoin Cash',
-//     asset_id: 'BCH',
-//   },
-//   {
-//     asset_name: 'Monero',
-//     asset_id: 'XMR',
-//   },
-//   {
-//     asset_name: 'Dogecoin',
-//     asset_id: 'DOGE',
-//   },
-//   {
-//     asset_name: 'Cardano',
-//     asset_id: 'ADA',
-//   },
-//   {
-//     asset_name: 'Litecoin',
-//     asset_id: 'LTC',
-//   },
-//   {
-//     asset_name: 'TRON',
-//     asset_id: 'TRX',
-//   },
-// ]
+// assets that we want
+const assets = [
+  {
+    asset_name: 'Bitcoin',
+    asset_id: 'BTC',
+  },
+  {
+    asset_name: 'Ethereum',
+    asset_id: 'ETH',
+  },
+  {
+    asset_name: 'Tether USDT',
+    asset_id: 'USDT',
+  },
+  {
+    asset_name: 'XRP',
+    asset_id: 'XRP',
+  },
+  {
+    asset_name: 'Bitcoin Cash',
+    asset_id: 'BCH',
+  },
+  {
+    asset_name: 'Monero',
+    asset_id: 'XMR',
+  },
+  {
+    asset_name: 'Dogecoin',
+    asset_id: 'DOGE',
+  },
+  {
+    asset_name: 'Cardano',
+    asset_id: 'ADA',
+  },
+  {
+    asset_name: 'Litecoin',
+    asset_id: 'LTC',
+  },
+  {
+    asset_name: 'TRON',
+    asset_id: 'TRX',
+  },
+]
 
-// const icons = [
-//   {
-//     asset_id: 'BTC',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/4caf2b16a0174e26a3482cea69c34cba.png',
-//   },
-//   {
-//     asset_id: 'XMR',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/e342d99d4648423e9fb5f68785dd2adf.png',
-//   },
-//   {
-//     asset_id: 'BCH',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/a7587cc1505544ecbc577b56f17d38f9.png',
-//   },
-//   {
-//     asset_id: 'ADA',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/2701173b1b7740f286939659359e225c.png',
-//   },
-//   {
-//     asset_id: 'TRX',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/2fb39015430a4945a6458407b6c0fdc5.png',
-//   },
-//   {
-//     asset_id: 'ETH',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/604ae4533d9f4ad09a489905cce617c2.png',
-//   },
-//   {
-//     asset_id: 'XRP',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/ba90bcb0cafb4801ac5dd310f47d6411.png',
-//   },
-//   {
-//     asset_id: 'USDT',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/5ed65416963e4e57998a3c302da8936e.png',
-//   },
-//   {
-//     asset_id: 'DOGE',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/63e240f3047f41c791796784bc719f63.png',
-//   },
-//   {
-//     asset_id: 'LTC',
-//     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/a201762f149941ef9b84e0742cd00e48.png',
-//   },
-// ]
+//mocked icons request
+const icons = [
+  {
+    asset_id: 'BTC',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/4caf2b16a0174e26a3482cea69c34cba.png',
+  },
+  {
+    asset_id: 'XMR',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/e342d99d4648423e9fb5f68785dd2adf.png',
+  },
+  {
+    asset_id: 'BCH',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/a7587cc1505544ecbc577b56f17d38f9.png',
+  },
+  {
+    asset_id: 'ADA',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/2701173b1b7740f286939659359e225c.png',
+  },
+  {
+    asset_id: 'TRX',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/2fb39015430a4945a6458407b6c0fdc5.png',
+  },
+  {
+    asset_id: 'ETH',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/604ae4533d9f4ad09a489905cce617c2.png',
+  },
+  {
+    asset_id: 'XRP',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/ba90bcb0cafb4801ac5dd310f47d6411.png',
+  },
+  {
+    asset_id: 'USDT',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/5ed65416963e4e57998a3c302da8936e.png',
+  },
+  {
+    asset_id: 'DOGE',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/63e240f3047f41c791796784bc719f63.png',
+  },
+  {
+    asset_id: 'LTC',
+    url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/a201762f149941ef9b84e0742cd00e48.png',
+  },
+]
+
+const data = assets
+  .map((asset) => {
+    return icons
+      .map((icon) => {
+        if (icon.asset_id === asset.asset_id) {
+          return {
+            ...asset,
+            ...icon,
+          }
+        }
+
+        return null
+      })
+      .filter((icon) => icon !== null)
+  })
+  .flat() as {
+  asset_id: string
+  url: string
+  asset_name: string
+}[]
 ---
 
-<div>top-cryptos</div>
+<div
+  class="fluid-spacing fluid-px"
+  style="--spacing-min: 1rem; --spacing-max: 7rem;"
+>
+  <div
+    class="top-cryptos fluid-spacing fluid-py"
+    style="--spacing-min: 3.5rem; --spacing-max: 7.5rem;"
+  >
+    <h3
+      class="top-cryptos__title fluid-type"
+      style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-32);"
+    >
+      Top cryptos
+    </h3>
 
-<style></style>
+    <div>
+      <div class="cryptos-thead">
+        <span class="cryptos-thead__th">Crypto</span>
+
+        <span class="cryptos-thead__th">Trade</span>
+      </div>
+
+      <div class="cryptos-tbody">
+        {
+          data.map((asset) => (
+            <TopCryptosItem
+              name={asset.asset_name}
+              url={asset.url}
+              id={asset.asset_id}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .top-cryptos {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-cryptos__title {
+    line-height: var(--line-height-32);
+    margin-bottom: 0.8em;
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .cryptos-thead {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
+  }
+
+  .cryptos-thead__th {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    line-height: var(--line-height-14);
+  }
+
+  .cryptos-tbody {
+    margin-top: 0.5em;
+  }
+
+  @media (min-width: 48em) {
+    .cryptos-thead__th {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      line-height: var(--line-height-16);
+    }
+  }
+
+  @media (min-width: 90em) {
+    .top-cryptos__title {
+      line-height: var(--line-height-40);
+      margin-bottom: 1.5em;
+    }
+  }
+</style>

@@ -21,30 +21,18 @@ import { Image } from '@astrojs/image/components'
           />
 
           <div class="floating-card floating-card--btc">
-            <Image
-              src={btcIcon}
-              aspectRatio="square"
-              alt="Bitcoin floating card"
-            />
+            <Image src={btcIcon} alt="Bitcoin floating card" />
           </div>
 
           <div class="floating-card floating-card--chart">
-            <Image
-              src={chartIcon}
-              aspectRatio="square"
-              alt="Chart floating card"
-            />
+            <Image src={chartIcon} alt="Chart floating card" />
           </div>
         </div>
       </div>
       <div class="embla__slide">
         <div class="content">
           <div class="floating-card floating-card--devices">
-            <Image
-              src={devicesIcon}
-              aspectRatio="square"
-              alt="Chart floating card"
-            />
+            <Image src={devicesIcon} alt="Chart floating card" />
           </div>
 
           <Image src={man} fit="contain" alt="happy-man-using-a-smartphone" />
@@ -186,7 +174,7 @@ import { Image } from '@astrojs/image/components'
 
     slides.forEach((slide) => slide.classList.remove('embla__slide--active'))
 
-    inViewNode.classList.add('embla__slide--active')
+    inViewNode?.classList.add('embla__slide--active')
   }
 
   handleActiveEle()

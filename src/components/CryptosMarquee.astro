@@ -1,59 +1,59 @@
 ---
-import type {
-  DataType,
-  FomatedDataType,
-  RequestDataType,
-} from '@/resources/types'
-import { formatCurrency, getVariationRate } from '@/utils'
+// import type {
+//   DataType,
+//   FomatedDataType,
+//   RequestDataType,
+// } from '@/resources/types'
+// import { formatCurrency, getVariationRate } from '@/utils'
 
-const assets = ['BTC', 'ETH', 'XRP']
+// const assets = ['BTC', 'ETH', 'XRP']
 
 const { classes } = Astro.props
 
-const assetsPromises = assets.map(async (asset) => {
-  const ratesPromises = [
-    fetch(`${import.meta.env.COINAPI_BASE_URL}/exchangerate/${asset}/USD`, {
-      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-    }).then((res) => res.json()),
-    fetch(
-      `${
-        import.meta.env.COINAPI_BASE_URL
-      }/exchangerate/${asset}/USD/history?period_id=1HRS&limit=1`,
-      {
-        headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-      }
-    ).then((res) => res.json()),
-  ]
+// const assetsPromises = assets.map(async (asset) => {
+//   const ratesPromises = [
+//     fetch(`${import.meta.env.COINAPI_BASE_URL}/exchangerate/${asset}/USD`, {
+//       headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+//     }).then((res) => res.json()),
+//     fetch(
+//       `${
+//         import.meta.env.COINAPI_BASE_URL
+//       }/exchangerate/${asset}/USD/history?period_id=1HRS&limit=1`,
+//       {
+//         headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+//       }
+//     ).then((res) => res.json()),
+//   ]
 
-  const data = Promise.all(ratesPromises)
+//   const data = Promise.all(ratesPromises)
 
-  return await data
-})
+//   return await data
+// })
 
-let hasError = false
-let assetsFormated: FomatedDataType[] | null = null
+// let hasError = false
+// let assetsFormated: FomatedDataType[] | null = null
 
-try {
-  const response = Promise.all(assetsPromises)
+// try {
+//   const response = Promise.all(assetsPromises)
 
-  const data = (await response) as unknown as RequestDataType[]
+//   const data = (await response) as unknown as RequestDataType[]
 
-  assetsFormated = data.map((asset) => {
-    const [newData, oldData] = asset.flat() as unknown as DataType
+//   assetsFormated = data.map((asset) => {
+//     const [newData, oldData] = asset.flat() as unknown as DataType
 
-    return {
-      assetLabel: newData.asset_id_base,
-      assetQuote: newData.asset_id_quote,
-      rate: formatCurrency(newData.rate),
-      variation: getVariationRate(newData.rate, oldData.rate_close).slice(
-        0,
-        -1
-      ),
-    }
-  })
-} catch (err) {
-  hasError = true
-}
+//     return {
+//       assetLabel: newData.asset_id_base,
+//       assetQuote: newData.asset_id_quote,
+//       rate: formatCurrency(newData.rate),
+//       variation: getVariationRate(newData.rate, oldData.rate_close).slice(
+//         0,
+//         -1
+//       ),
+//     }
+//   })
+// } catch (err) {
+//   hasError = true
+// }
 ---
 
 <div
@@ -61,7 +61,7 @@ try {
   style="--font-size-min: var(--font-size-12); --font-size-max: var(--font-size-14);"
 >
   <div class="cryptos-marquee__container">
-    {
+    <!-- {
       assetsFormated ? (
         [...new Array(2)].map(() => (
           <div class="cryptos-marquee__content">
@@ -86,7 +86,7 @@ try {
       ) : hasError ? (
         <span>Something went wrong</span>
       ) : null
-    }
+    } -->
   </div>
 </div>
 
