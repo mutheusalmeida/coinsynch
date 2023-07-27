@@ -3,6 +3,13 @@ import { Image } from '@astrojs/image/components'
 import TopCryptosItem from './TopCryptosItem.astro'
 import minusIcon from '@/assets/minus-icon.svg'
 import plusIcon from '@/assets/plus-icon.svg'
+import type { IconRequestType } from '@/resources/types'
+
+type DataType = {
+  asset_id: string
+  url: string
+  asset_name: string
+}
 
 // assets that we want
 const assets = [
@@ -48,8 +55,8 @@ const assets = [
   },
 ]
 
-//mocked icons request
-const icons = [
+// fallback icons
+let icons: IconRequestType[] = [
   {
     asset_id: 'BTC',
     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/4caf2b16a0174e26a3482cea69c34cba.png',
@@ -92,6 +99,15 @@ const icons = [
   },
 ]
 
+// const response = await fetch(
+//   `${import.meta.env.COINAPI_BASE_URL}/assets/icons/32`,
+//   {
+//     headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+//   }
+// )
+
+// const icons: IconRequestType[] = await response.json()
+
 const data = assets
   .map((asset) => {
     return icons
@@ -107,11 +123,7 @@ const data = assets
       })
       .filter((icon) => icon !== null)
   })
-  .flat() as {
-  asset_id: string
-  url: string
-  asset_name: string
-}[]
+  .flat() as DataType[]
 ---
 
 <div
@@ -147,7 +159,7 @@ const data = assets
 
       <div class="cryptos-tbody">
         {
-          data.slice(0, 5).map((asset, index) => (
+          data?.slice(0, 5).map((asset, index) => (
             <div>
               <TopCryptosItem
                 name={asset.asset_name}
@@ -166,7 +178,7 @@ const data = assets
         >
           <div class="expander-content">
             {
-              data.slice(5, 10).map((asset, index) => (
+              data?.slice(5, 10).map((asset, index) => (
                 <div>
                   <TopCryptosItem
                     name={asset.asset_name}

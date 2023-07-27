@@ -15,4 +15,9 @@ export type FomatedDataType = {
   variation: string
 }
 
+export type IconRequestType = {
+  asset_id: string
+  url: string
+}
+
 export type RequestDataType = [NewDataType, OldDataType[]]

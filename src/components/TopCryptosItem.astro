@@ -1,6 +1,8 @@
 ---
 import arrowFlatIcon from '@/assets/arrow-flat-icon.svg'
 import { Image } from '@astrojs/image/components'
+import type { RequestDataType } from '@/resources/types'
+import { formatCurrency, getVariationRate } from '@/utils'
 
 type Props = {
   name: string
@@ -9,7 +11,55 @@ type Props = {
   index: number
 }
 
+type DataType = {
+  rate: number
+  variation: string
+}
+
 const { name, url, id, index } = Astro.props
+
+const promises = [
+  fetch(`${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`, {
+    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+  }).then((res) => res.json()),
+  fetch(
+    `${
+      import.meta.env.COINAPI_BASE_URL
+    }/exchangerate/${id}/USD/history?period_id=1DAY&limit=1`,
+    {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+    }
+  ).then((res) => res.json()),
+]
+
+const ratesPromises = Promise.all(promises)
+
+const data = (await ratesPromises) as unknown as RequestDataType
+
+const mock = {
+  rate: 0.9996882567431848,
+  variation: '+0.873',
+}
+
+const asset = data.flat().reduce((acc, curr) => {
+  if ('rate' in curr) {
+    return {
+      ...acc,
+      rate: curr.rate,
+    }
+  }
+
+  if ('rate' in acc && 'rate_close' in curr) {
+    return {
+      ...acc,
+      variation: getVariationRate(acc.rate, curr.rate_close),
+    }
+  }
+
+  return {
+    ...acc,
+  }
+}, {} as DataType)
 ---
 
 <div data-id={id} data-js="crypto-expandable" class="crypto-expandable">
@@ -46,13 +96,27 @@ const { name, url, id, index } = Astro.props
         <div>
           <span class="cryptos-thead__th">Price</span>
 
-          <span class="cryptos-tbody__td">US$ 25,499.52</span>
+          <span class="cryptos-tbody__td"
+            >US {formatCurrency(asset.rate || mock.rate)}</span
+          >
         </div>
 
         <div>
           <span class="cryptos-thead__th">Change</span>
 
-          <span class="cryptos-tbody__td cryptos-tbody__td--rise">+5,65%</span>
+          <span
+            class:list={[
+              'cryptos-tbody__td',
+              {
+                'cryptos-tbody__td--rise': asset.variation
+                  ? asset.variation.startsWith('+')
+                  : mock.variation.startsWith('+'),
+                'cryptos-tbody__td--drop': asset.variation
+                  ? asset.variation.startsWith('-')
+                  : mock.variation.startsWith('-'),
+              },
+            ]}>{asset.variation || mock.variation}</span
+          >
         </div>
       </div>
     </div>
@@ -78,9 +142,23 @@ const { name, url, id, index } = Astro.props
     </h4>
   </div>
 
-  <span class="cryptos-tbody__td">US$ 25,499.52</span>
+  <span class="cryptos-tbody__td"
+    >US {formatCurrency(asset.rate || mock.rate)}</span
+  >
 
-  <span class="cryptos-tbody__td cryptos-tbody__td--rise">+5,65%</span>
+  <span
+    class:list={[
+      'cryptos-tbody__td',
+      {
+        'cryptos-tbody__td--rise': asset.variation
+          ? asset.variation.startsWith('+')
+          : mock.variation.startsWith('+'),
+        'cryptos-tbody__td--drop': asset.variation
+          ? asset.variation.startsWith('-')
+          : mock.variation.startsWith('-'),
+      },
+    ]}>{asset.variation || mock.variation}</span
+  >
 
   <button class="cryptos-tbody__btn">Buy</button>
 </div>
