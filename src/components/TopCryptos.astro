@@ -15,7 +15,7 @@ const assets = [
     asset_id: 'ETH',
   },
   {
-    asset_name: 'Tether USDT',
+    asset_name: 'Tether',
     asset_id: 'USDT',
   },
   {
@@ -131,19 +131,29 @@ const data = assets
 
     <div>
       <div class="cryptos-thead">
-        <span class="cryptos-thead__th">Crypto</span>
+        <span class="cryptos-thead__th">#</span>
+
+        <span class="cryptos-thead__th cryptos-thead__th--crypto">Crypto</span>
+
+        <span class="cryptos-thead__th">Price</span>
+
+        <span class="cryptos-thead__th">Change</span>
 
         <span class="cryptos-thead__th">Trade</span>
+
+        <span class="cryptos-thead__th cryptos-thead__th--actions">Actions</span
+        >
       </div>
 
       <div class="cryptos-tbody">
         {
-          data.slice(0, 5).map((asset) => (
+          data.slice(0, 5).map((asset, index) => (
             <div>
               <TopCryptosItem
                 name={asset.asset_name}
                 url={asset.url}
                 id={asset.asset_id}
+                index={index + 1}
               />
             </div>
           ))
@@ -156,12 +166,13 @@ const data = assets
         >
           <div class="expander-content">
             {
-              data.slice(5, 10).map((asset) => (
+              data.slice(5, 10).map((asset, index) => (
                 <div>
                   <TopCryptosItem
                     name={asset.asset_name}
                     url={asset.url}
                     id={asset.asset_id}
+                    index={index + 5 + 1}
                   />
                 </div>
               ))
@@ -210,13 +221,13 @@ const data = assets
     margin-top: 0.5em;
 
     & > div:nth-child(-n + 5):nth-child(even) {
-      background-color: var(--gray-100);
+      background-color: rgba(246, 246, 246, 0.5);
     }
   }
 
   .expander-content {
     & div:nth-child(odd) {
-      background-color: var(--gray-100);
+      background-color: rgba(246, 246, 246, 0.5);
     }
   }
 
@@ -239,11 +250,34 @@ const data = assets
     }
   }
 
+  .cryptos-thead {
+    & > span:not(.cryptos-thead__th--actions, .cryptos-thead__th--crypto) {
+      display: none;
+    }
+  }
+
   @media (min-width: 48em) {
     .cryptos-thead__th {
       font-size: 0.875rem;
       color: var(--gray-500);
       line-height: var(--line-height-16);
+    }
+
+    .cryptos-thead {
+      display: grid;
+      grid-template-columns: 1fr 4fr 3fr 2fr 5em;
+      padding: 1em 1.5em;
+      align-items: center;
+    }
+
+    .cryptos-thead {
+      & > span:not(.cryptos-thead__th--actions, .cryptos-thead__th--crypto) {
+        display: initial;
+      }
+    }
+
+    .cryptos-thead__th--actions {
+      display: none;
     }
   }
 
@@ -251,6 +285,11 @@ const data = assets
     .top-cryptos__title {
       line-height: var(--line-height-40);
       margin-bottom: 1.5em;
+    }
+
+    .cryptos-thead {
+      display: grid;
+      grid-template-columns: 1fr 2fr 2fr 2fr 5em;
     }
   }
 </style>

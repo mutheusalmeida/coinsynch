@@ -6,12 +6,13 @@ type Props = {
   name: string
   url: string
   id: string
+  index: number
 }
 
-const { name, url, id } = Astro.props
+const { name, url, id, index } = Astro.props
 ---
 
-<div data-id={id} data-js="crypto-expandable">
+<div data-id={id} data-js="crypto-expandable" class="crypto-expandable">
   <div data-js="toggle" class="cryptos-tbody__header">
     <div class="cryptos-tbody__crypto">
       <Image
@@ -23,10 +24,7 @@ const { name, url, id } = Astro.props
         alt="Crypto icon"
       />
 
-      <h4
-        class="cryptos-tbody__crypto-name fluid-type"
-        style="--font-size-min: var(--font-size-12); --font-size-max: var(--font-size-16);"
-      >
+      <h4 class="cryptos-tbody__crypto-name">
         {name}
         <span>{id}</span>
       </h4>
@@ -61,6 +59,32 @@ const { name, url, id } = Astro.props
   </div>
 </div>
 
+<div class="crypto-column">
+  <span class="crypto-column__index">{index > 9 ? index : `0${index}`}</span>
+
+  <div class="cryptos-tbody__crypto">
+    <Image
+      class="cryptos-tbody__crypto-icon"
+      width={32}
+      height={32}
+      src={url}
+      quality={1}
+      alt="Crypto icon"
+    />
+
+    <h4 class="cryptos-tbody__crypto-name">
+      {name}
+      <span>{id}</span>
+    </h4>
+  </div>
+
+  <span class="cryptos-tbody__td">US$ 25,499.52</span>
+
+  <span class="cryptos-tbody__td cryptos-tbody__td--rise">+5,65%</span>
+
+  <button class="cryptos-tbody__btn">Buy</button>
+</div>
+
 <style>
   .cryptos-tbody__header {
     display: flex;
@@ -88,6 +112,7 @@ const { name, url, id } = Astro.props
   }
 
   .cryptos-tbody__crypto-name {
+    font-size: 0.75rem;
     font-weight: 400;
     line-height: var(--line-height-14-base-12);
 
@@ -135,7 +160,46 @@ const { name, url, id } = Astro.props
     color: var(--red-700);
   }
 
+  .crypto-column {
+    display: none;
+  }
+
+  .crypto-column__index {
+    color: var(--gray-500);
+  }
+
+  .cryptos-tbody__btn,
+  .crypto-column__index {
+    font-size: 0.875rem;
+    line-height: var(--line-height-14);
+  }
+
+  .cryptos-tbody__btn {
+    display: flex;
+    padding: 0.5714em 1.1428em;
+    background-color: var(--green-700);
+    color: var(--white);
+    min-width: 5.7142em;
+    max-width: max-content;
+    border: none;
+    border-radius: 7.1428em;
+    justify-content: center;
+    transition:
+      color,
+      background-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .cryptos-tbody__btn:hover {
+    background-color: var(--green-800);
+    color: var(--gray-200);
+  }
+
   @media (min-width: 48em) {
+    .crypto-expandable {
+      display: none;
+    }
+
     .cryptos-thead__th {
       font-size: 0.875rem;
       color: var(--gray-500);
@@ -152,15 +216,27 @@ const { name, url, id } = Astro.props
       gap: 1em;
     }
 
+    .cryptos-tbody__crypto-name {
+      font-size: 1rem;
+      line-height: var(--line-height-24);
+    }
+
     .cryptos-tbody__td {
       font-size: 1rem;
       line-height: var(--line-height-24);
     }
+
+    .crypto-column {
+      display: grid;
+      grid-template-columns: 1fr 4fr 3fr 2fr 5em;
+      padding: 1em 1.5em;
+      align-items: center;
+    }
   }
 
   @media (min-width: 90em) {
-    .cryptos-tbody__crypto-name {
-      line-height: var(--line-height-24);
+    .crypto-column {
+      grid-template-columns: 1fr 2fr 2fr 2fr 5em;
     }
   }
 </style>
