@@ -1,0 +1,97 @@
+---
+import type { RateDataType } from '@/resources/types'
+import { formatCurrency, getVariationRate } from '@/utils'
+
+type Props = {
+  id: string
+}
+
+const { id } = Astro.props
+
+const currentRateResponse = await fetch(
+  `${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`,
+  {
+    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+  }
+)
+
+const oldRateResponse = await fetch(
+  `${
+    import.meta.env.COINAPI_BASE_URL
+  }/exchangerate/${id}/USD/history?period_id=2HRS&limit=1`,
+  {
+    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+  }
+)
+
+const currentRateData = await currentRateResponse.json()
+
+const oldRateData = await oldRateResponse.json()
+
+const mock = {
+  rate: 0.9996882567431848,
+  variation: '+0.873',
+}
+
+const asset: RateDataType = [currentRateData, oldRateData]
+  .flat()
+  .reduce((acc, curr) => {
+    if ('rate' in curr) {
+      return {
+        ...acc,
+        rate: curr.rate,
+      }
+    }
+
+    if ('rate' in acc && 'rate_close' in curr) {
+      return {
+        ...acc,
+        variation: getVariationRate(acc.rate, curr.rate_close).slice(0, -1),
+      }
+    }
+
+    return {
+      ...acc,
+    }
+  }, {})
+---
+
+<div class="cryptos-marquee__item">
+  <span class="cryptos-marquee__coin">{id}</span>
+
+  <span>{formatCurrency(asset.rate || mock.rate)}</span>
+
+  <span
+    class:list={[
+      {
+        'cryptos-marquee--rise': asset.variation
+          ? asset.variation.startsWith('+')
+          : mock.variation.startsWith('+'),
+        'cryptos-marquee--drop': asset.variation
+          ? asset.variation.startsWith('-')
+          : mock.variation.startsWith('-'),
+      },
+    ]}
+  >
+    {asset.variation || mock.variation}
+  </span>
+</div>
+
+<style>
+  .cryptos-marquee__item {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .cryptos-marquee__coin {
+    color: var(--gray-800);
+  }
+
+  .cryptos-marquee--rise {
+    color: var(--green-700);
+  }
+
+  .cryptos-marquee--drop {
+    color: var(--red-700);
+  }
+</style>

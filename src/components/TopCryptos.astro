@@ -130,7 +130,8 @@ function formatIcons(
 }
 
 const data = assets.map((asset) => {
-  if (icons) {
+  // request returns an object on limit request error
+  if (Array.isArray(icons)) {
     return formatIcons(icons, asset)
   } else {
     return formatIcons(fallbackIcons, asset)

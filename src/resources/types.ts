@@ -15,6 +15,11 @@ export type FomatedDataType = {
   variation: string
 }
 
+export type RateDataType = {
+  rate: number
+  variation: string
+}
+
 export type IconRequestType = {
   asset_id: string
   url: string

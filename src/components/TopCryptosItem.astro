@@ -2,17 +2,13 @@
 import arrowFlatIcon from '@/assets/arrow-flat-icon.svg'
 import { Image } from '@astrojs/image/components'
 import { formatCurrency, getVariationRate } from '@/utils'
+import type { RateDataType } from '@/resources/types'
 
 type Props = {
   name: string
   url: string
   id: string
   index: number
-}
-
-type DataType = {
-  rate: number
-  variation: string
 }
 
 const { name, url, id, index } = Astro.props
@@ -42,7 +38,7 @@ const mock = {
   variation: '+0.873',
 }
 
-const asset: DataType = [currentRateData, oldRateData]
+const asset: RateDataType = [currentRateData, oldRateData]
   .flat()
   .reduce((acc, curr) => {
     if ('rate' in curr) {
