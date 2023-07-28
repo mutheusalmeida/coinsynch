@@ -3,7 +3,11 @@ import AboutCarousel from './AboutCarousel.astro'
 import Button from './Button.astro'
 ---
 
-<section class="about" aria-label="About section">
+<section
+  class="about fluid-spacing fluid-pt"
+  style="--spacing-min: 3.5rem; --spacing-max: 7.5rem;"
+  aria-label="About section"
+>
   <div
     class="about__header fluid-spacing fluid-px"
     style="--spacing-min: 1rem; --spacing-max: 7rem;"
@@ -47,7 +51,6 @@ import Button from './Button.astro'
 
 <style is:global>
   .about {
-    min-height: calc(100svh - var(--header-height));
     display: grid;
     grid-template-columns: var(--col-sm);
     grid-template-rows: var(--row);
