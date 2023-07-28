@@ -1,7 +1,6 @@
 ---
 import arrowFlatIcon from '@/assets/arrow-flat-icon.svg'
 import { Image } from '@astrojs/image/components'
-import type { RequestDataType } from '@/resources/types'
 import { formatCurrency, getVariationRate } from '@/utils'
 
 type Props = {
@@ -18,48 +17,52 @@ type DataType = {
 
 const { name, url, id, index } = Astro.props
 
-const promises = [
-  fetch(`${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`, {
+const currentRateResponse = await fetch(
+  `${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`,
+  {
     headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-  }).then((res) => res.json()),
-  fetch(
-    `${
-      import.meta.env.COINAPI_BASE_URL
-    }/exchangerate/${id}/USD/history?period_id=1DAY&limit=1`,
-    {
-      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-    }
-  ).then((res) => res.json()),
-]
+  }
+)
 
-const ratesPromises = Promise.all(promises)
+const oldRateResponse = await fetch(
+  `${
+    import.meta.env.COINAPI_BASE_URL
+  }/exchangerate/${id}/USD/history?period_id=1DAY&limit=1`,
+  {
+    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+  }
+)
 
-const data = (await ratesPromises) as unknown as RequestDataType
+const currentRateData = await currentRateResponse.json()
+
+const oldRateData = await oldRateResponse.json()
 
 const mock = {
   rate: 0.9996882567431848,
   variation: '+0.873',
 }
 
-const asset = data.flat().reduce((acc, curr) => {
-  if ('rate' in curr) {
+const asset: DataType = [currentRateData, oldRateData]
+  .flat()
+  .reduce((acc, curr) => {
+    if ('rate' in curr) {
+      return {
+        ...acc,
+        rate: curr.rate,
+      }
+    }
+
+    if ('rate' in acc && 'rate_close' in curr) {
+      return {
+        ...acc,
+        variation: getVariationRate(acc.rate, curr.rate_close),
+      }
+    }
+
     return {
       ...acc,
-      rate: curr.rate,
     }
-  }
-
-  if ('rate' in acc && 'rate_close' in curr) {
-    return {
-      ...acc,
-      variation: getVariationRate(acc.rate, curr.rate_close),
-    }
-  }
-
-  return {
-    ...acc,
-  }
-}, {} as DataType)
+  }, {})
 ---
 
 <div data-id={id} data-js="crypto-expandable" class="crypto-expandable">

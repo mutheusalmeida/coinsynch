@@ -56,7 +56,7 @@ const assets = [
 ]
 
 // fallback icons
-let icons: IconRequestType[] = [
+let fallbackIcons: IconRequestType[] = [
   {
     asset_id: 'BTC',
     url: 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_32/4caf2b16a0174e26a3482cea69c34cba.png',
@@ -99,31 +99,43 @@ let icons: IconRequestType[] = [
   },
 ]
 
-// const response = await fetch(
-//   `${import.meta.env.COINAPI_BASE_URL}/assets/icons/32`,
-//   {
-//     headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-//   }
-// )
+const response = await fetch(
+  `${import.meta.env.COINAPI_BASE_URL}/assets/icons/32`,
+  {
+    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+  }
+)
 
-// const icons: IconRequestType[] = await response.json()
+const icons: IconRequestType[] = await response.json()
 
-const data = assets
-  .map((asset) => {
-    return icons
-      .map((icon) => {
-        if (icon.asset_id === asset.asset_id) {
-          return {
-            ...asset,
-            ...icon,
-          }
-        }
+function formatIcons(
+  icons: IconRequestType[],
+  asset: {
+    asset_name: string
+    asset_id: string
+  }
+) {
+  return icons.reduce((acc, curr) => {
+    if (curr.asset_id === asset.asset_id) {
+      return {
+        ...asset,
+        ...curr,
+      }
+    }
 
-        return null
-      })
-      .filter((icon) => icon !== null)
-  })
-  .flat() as DataType[]
+    return {
+      ...acc,
+    }
+  }, {})
+}
+
+const data = assets.map((asset) => {
+  if (icons) {
+    return formatIcons(icons, asset)
+  } else {
+    return formatIcons(fallbackIcons, asset)
+  }
+}) as DataType[]
 ---
 
 <div

@@ -6,7 +6,7 @@ export type NewDataType = {
 
 export type OldDataType = { rate_close: number }
 
-export type DataType = [NewDataType, OldDataType]
+export type RequestRateType = [NewDataType, OldDataType]
 
 export type FomatedDataType = {
   assetLabel: string
