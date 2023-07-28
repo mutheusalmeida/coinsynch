@@ -39,14 +39,25 @@ import Button from './Button.astro'
       </div>
     </div>
 
-    <form>
-      <div>
-        <label for="email">Email</label>
+    <form
+      class="subscribe-form fluid-spacing fluid-pb"
+      style="--spacing-min: 3.5rem; --spacing-max: 7.5rem;"
+    >
+      <div class="subscribe-form__wrapper">
+        <label class="subscribe-form__label" for="email">Email</label>
 
-        <input id="email" type="email" name="email" />
+        <input
+          class="subscribe-form__input"
+          id="email"
+          type="email"
+          name="email"
+          placeholder="Email"
+        />
       </div>
 
-      <Button>Subscribe</Button>
+      <Button classes="subscribe-form__btn" variant="primary" size="md">
+        Subscribe
+      </Button>
     </form>
   </div>
 
@@ -65,7 +76,7 @@ import Button from './Button.astro'
   </div>
 </footer>
 
-<style>
+<style is:global>
   .footer {
     background: url('../assets/wave-footer.svg'),
       linear-gradient(138deg, #fbab34 0%, #ad721a 100%);
@@ -111,6 +122,54 @@ import Button from './Button.astro'
     }
   }
 
+  .subscribe-form {
+    width: 100%;
+  }
+
+  .subscribe-form__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-bottom: 1em;
+  }
+
+  .subscribe-form__label {
+    font-size: 0.875rem;
+    line-height: var(--line-height-16);
+  }
+
+  .subscribe-form__input {
+    color: var(--gray-400);
+    font-size: 1rem;
+    padding: 0 1em;
+    min-height: 2.5em;
+    line-height: 2.5em;
+    border: none;
+    border-radius: 0.375em;
+    background-color: var(--white);
+    box-shadow: var(--box-shadow-lg);
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+
+  .subscribe-form__btn {
+    box-shadow: var(--box-shadow-lg);
+    font-weight: 400;
+    max-width: 100%;
+  }
+
+  @media (max-width: 47.9375em) {
+    .footer__wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    .subscribe-form__btn {
+      min-height: 2.8571em;
+    }
+  }
+
   @media (min-width: 48em) {
     .footer__container {
       flex-direction: row;
@@ -143,6 +202,19 @@ import Button from './Button.astro'
       & small {
         display: initial;
       }
+    }
+
+    .subscribe-form {
+      padding-bottom: 0 !important;
+    }
+
+    .subscribe-form__wrapper {
+      margin-bottom: 1.25em;
+    }
+
+    .subscribe-form__input {
+      min-height: 3em;
+      line-height: 3em;
     }
   }
 
