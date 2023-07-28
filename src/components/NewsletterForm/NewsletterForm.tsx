@@ -1,25 +1,55 @@
-import type { FormEvent } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+import { useEffect, useState } from 'react'
 import * as S from './style'
 
+const formSchema = z.object({
+  email: z.string().min(1, 'Please enter an email').email('Invalid email'),
+})
+
+type FormSchemaType = z.infer<typeof formSchema>
+
 export const NewsletterForm = () => {
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isSubmitted, isValidating },
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
+  })
+  const [result, setResult] = useState('')
+
+  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
     const response = await fetch('/api/newsletter', {
       method: 'POST',
-      body: formData,
+      body: JSON.stringify(data),
     })
 
-    const data = await response.json()
+    reset()
 
-    if (data.message) {
-      console.log(data.message)
+    const result = await response.json()
+
+    if (result.message) {
+      setResult(result.message)
     }
   }
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (result) {
+        setResult('')
+      }
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [isSubmitted, result])
+
   return (
     <S.Form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="subscribe-form fluid-spacing fluid-pb"
     >
       <S.FormWrapper className="subscribe-form__wrapper">
@@ -31,13 +61,19 @@ export const NewsletterForm = () => {
           className="subscribe-form__input"
           id="email"
           type="email"
-          name="email"
           placeholder="Email"
-          required
+          disabled={isSubmitting}
+          {...register('email')}
         />
+
+        {errors.email && (
+          <S.Message hasError>{errors.email?.message}</S.Message>
+        )}
       </S.FormWrapper>
 
-      <S.FormButton>Subscribe</S.FormButton>
+      {result && !isValidating && <S.Message success>{result}</S.Message>}
+
+      <S.FormButton disabled={isSubmitting}>Subscribe</S.FormButton>
     </S.Form>
   )
 }

@@ -1,4 +1,9 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+type MessageType = {
+  hasError?: boolean
+  success?: boolean
+}
 
 export const Form = styled.form`
   --spacing-min: 3.5rem;
@@ -42,6 +47,11 @@ export const FormInput = styled.input`
     color: inherit;
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   @media (min-width: 48em) {
     min-height: 3em;
     line-height: 3em;
@@ -73,6 +83,11 @@ export const FormButton = styled.button`
     background-color: var(--orange-600);
   }
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   font-size: 0.875rem;
   min-height: 2.8571em;
 
@@ -82,4 +97,31 @@ export const FormButton = styled.button`
     font-size: 1rem;
     min-height: 3em;
   }
+`
+
+export const Message = styled.span.withConfig({
+  shouldForwardProp: (prop) => 'hasError' !== prop && 'success' !== prop,
+})<MessageType>`
+  padding: 0 0.5em;
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+      color: var(--red-700);
+    `}
+
+  ${({ success }) =>
+    success &&
+    css`
+      color: var(--orange-200);
+      display: inline-block;
+      margin-top: -0.75em;
+      margin-bottom: 1em;
+
+      @media (min-width: 48em) {
+        margin-bottom: 1.25em;
+      }
+    `}
 `
