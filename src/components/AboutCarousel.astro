@@ -5,7 +5,7 @@ import btcIcon from '@/assets/btc-icon.svg'
 import chartIcon from '@/assets/chart-icon.svg'
 import devicesIcon from '@/assets/devices-icon.svg'
 import nodeIcon from '@/assets/node-icon.svg'
-import { Image } from '@astrojs/image/components'
+import Image from 'astro/components/Image.astro'
 
 const data = [
   {
@@ -38,12 +38,7 @@ const data = [
         data.map(({ icon }) => (
           <div class="embla__slide">
             <div class="card">
-              <Image
-                class="card__icon"
-                src={icon}
-                aspectRatio="square"
-                alt="Bitcoin icon"
-              />
+              <Image class="card__icon" src={icon} alt="Bitcoin icon" />
 
               <h4
                 class="card__subtitle fluid-type"
@@ -74,12 +69,7 @@ const data = [
         {
           data.slice(0, 2).map(({ icon }) => (
             <div class="card">
-              <Image
-                class="card__icon"
-                src={icon}
-                aspectRatio="square"
-                alt="Bitcoin icon"
-              />
+              <Image class="card__icon" src={icon} alt="Bitcoin icon" />
 
               <h4
                 class="card__subtitle fluid-type"
@@ -108,12 +98,7 @@ const data = [
         {
           data.slice(2, 4).map(({ icon }) => (
             <div class="card">
-              <Image
-                class="card__icon"
-                src={icon}
-                aspectRatio="square"
-                alt="Bitcoin icon"
-              />
+              <Image class="card__icon" src={icon} alt="Bitcoin icon" />
 
               <h4
                 class="card__subtitle fluid-type"

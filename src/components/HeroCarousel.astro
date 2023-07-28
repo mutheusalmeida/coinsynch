@@ -6,7 +6,7 @@ import woman from '@/assets/happy-woman-standing-using-a-tablet.webp'
 import btcIcon from '@/assets/btc-icon.svg'
 import chartIcon from '@/assets/chart-icon.svg'
 import devicesIcon from '@/assets/devices-icon.svg'
-import { Image } from '@astrojs/image/components'
+import Image from 'astro/components/Image.astro'
 ---
 
 <div data-js="slide-hero" class="embla">
@@ -14,11 +14,7 @@ import { Image } from '@astrojs/image/components'
     <div class="embla__container">
       <div class="embla__slide">
         <div class="content">
-          <Image
-            src={woman}
-            fit="contain"
-            alt="Happy woman standing using a tablet"
-          />
+          <Image src={woman} alt="Happy woman standing using a tablet" />
 
           <div class="floating-card floating-card--btc">
             <Image src={btcIcon} alt="Bitcoin floating card" />
@@ -35,7 +31,7 @@ import { Image } from '@astrojs/image/components'
             <Image src={devicesIcon} alt="Chart floating card" />
           </div>
 
-          <Image src={man} fit="contain" alt="happy-man-using-a-smartphone" />
+          <Image src={man} alt="happy-man-using-a-smartphone" />
         </div>
       </div>
     </div>
@@ -82,6 +78,7 @@ import { Image } from '@astrojs/image/components'
 
     & img {
       width: 90%;
+      object-fit: contain;
       -webkit-user-drag: none;
     }
   }

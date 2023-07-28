@@ -1,8 +1,8 @@
 ---
 import arrowFlatIcon from '@/assets/arrow-flat-icon.svg'
-import { Image } from '@astrojs/image/components'
 import { formatCurrency, getVariationRate } from '@/utils'
 import type { RateDataType } from '@/resources/types'
+import Image from 'astro/components/Image.astro'
 
 type Props = {
   name: string
@@ -69,7 +69,6 @@ const asset: RateDataType = [currentRateData, oldRateData]
         width={32}
         height={32}
         src={url}
-        quality={1}
         alt="Crypto icon"
       />
 
@@ -131,7 +130,6 @@ const asset: RateDataType = [currentRateData, oldRateData]
       width={32}
       height={32}
       src={url}
-      quality={1}
       alt="Crypto icon"
     />
 

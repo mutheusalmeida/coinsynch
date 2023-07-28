@@ -1,7 +1,7 @@
 ---
 import logo from '@/assets/logo.svg'
-import { Image } from '@astrojs/image/components'
-import Button from './Button.astro'
+import { NewsletterForm } from '@/components/NewsletterForm'
+import Image from 'astro/components/Image.astro'
 ---
 
 <footer class="footer">
@@ -39,26 +39,7 @@ import Button from './Button.astro'
       </div>
     </div>
 
-    <form
-      class="subscribe-form fluid-spacing fluid-pb"
-      style="--spacing-min: 3.5rem; --spacing-max: 7.5rem;"
-    >
-      <div class="subscribe-form__wrapper">
-        <label class="subscribe-form__label" for="email">Email</label>
-
-        <input
-          class="subscribe-form__input"
-          id="email"
-          type="email"
-          name="email"
-          placeholder="Email"
-        />
-      </div>
-
-      <Button classes="subscribe-form__btn" variant="primary" size="md">
-        Subscribe
-      </Button>
-    </form>
+    <NewsletterForm client:load />
   </div>
 
   <div
@@ -85,8 +66,8 @@ import Button from './Button.astro'
   }
 
   .footer__container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
     gap: 2.5em;
   }
@@ -122,64 +103,18 @@ import Button from './Button.astro'
     }
   }
 
-  .subscribe-form {
-    width: 100%;
-  }
-
-  .subscribe-form__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    margin-bottom: 1em;
-  }
-
-  .subscribe-form__label {
-    font-size: 0.875rem;
-    line-height: var(--line-height-16);
-  }
-
-  .subscribe-form__input {
-    color: var(--gray-400);
-    font-size: 1rem;
-    padding: 0 1em;
-    min-height: 2.5em;
-    line-height: 2.5em;
-    border: none;
-    border-radius: 0.375em;
-    background-color: var(--white);
-    box-shadow: var(--box-shadow-lg);
-
-    &::placeholder {
-      color: inherit;
-    }
-  }
-
-  .subscribe-form__btn {
-    box-shadow: var(--box-shadow-lg);
-    font-weight: 400;
-    max-width: 100%;
-  }
-
   @media (max-width: 47.9375em) {
     .footer__wrapper {
       padding-bottom: 0 !important;
-    }
-
-    .subscribe-form__btn {
-      min-height: 2.8571em;
     }
   }
 
   @media (min-width: 48em) {
     .footer__container {
-      flex-direction: row;
+      display: grid;
       gap: 2em;
       justify-content: space-between;
-
-      & > * {
-        flex: 1;
-        max-width: 24em;
-      }
+      grid-template-columns: 1fr 1fr;
     }
 
     .footer__subtitle {
@@ -202,19 +137,6 @@ import Button from './Button.astro'
       & small {
         display: initial;
       }
-    }
-
-    .subscribe-form {
-      padding-bottom: 0 !important;
-    }
-
-    .subscribe-form__wrapper {
-      margin-bottom: 1.25em;
-    }
-
-    .subscribe-form__input {
-      min-height: 3em;
-      line-height: 3em;
     }
   }
 
