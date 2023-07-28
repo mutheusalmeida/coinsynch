@@ -1,0 +1,158 @@
+---
+import logo from '@/assets/logo.svg'
+import { Image } from '@astrojs/image/components'
+import Button from './Button.astro'
+---
+
+<footer class="footer">
+  <div
+    class="footer__container fluid-spacing fluid-px"
+    style="--spacing-min: 1.5rem; --spacing-max: 13.5rem; --spacing-speed: 5;"
+  >
+    <div
+      class="footer__wrapper fluid-spacing fluid-py"
+      style="--spacing-min: 3.5rem; --spacing-max: 7.5rem;"
+    >
+      <div>
+        <h2
+          class="footer__subtitle fluid-type"
+          style="--font-size-min: var(--font-size-16); --font-size-max: var(--font-size-24);"
+        >
+          Lorem ipsum
+        </h2>
+
+        <h3
+          class="footer__title fluid-type"
+          style="--font-size-min: var(--font-size-24); --font-size-max: var(--font-size-40);"
+        >
+          Lorem ipsum
+        </h3>
+
+        <p
+          class="footer__desc fluid-type"
+          style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+          purus sit amet luctus venenatis, lectus magna fringilla urna,
+          porttitor
+        </p>
+      </div>
+    </div>
+
+    <form>
+      <div>
+        <label for="email">Email</label>
+
+        <input id="email" type="email" name="email" />
+      </div>
+
+      <Button>Subscribe</Button>
+    </form>
+  </div>
+
+  <div
+    class="footer__copywright fluid-spacing fluid-px"
+    style="--spacing-min: 1.5rem; --spacing-max: 7rem;"
+  >
+    <div
+      class="footer__copywright-wrapper fluid-spacing fluid-py"
+      style="--spacing-min: 1.25rem; --spacing-max: 1.5rem;"
+    >
+      <small>Copywright &copy; 2023 - All rights reserved</small>
+
+      <Image src={logo} width={94} height={16} alt="CoinSynch" />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: url('../assets/wave-footer.svg'),
+      linear-gradient(138deg, #fbab34 0%, #ad721a 100%);
+    background-repeat: no-repeat;
+    color: var(--white);
+  }
+
+  .footer__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em;
+  }
+
+  .footer__subtitle {
+    line-height: var(--line-height-24);
+    color: var(--orange-200);
+  }
+
+  .footer__title {
+    line-height: var(--line-height-32);
+    margin-bottom: 0.3333em;
+  }
+
+  .footer__desc {
+    line-height: var(--line-height-24);
+  }
+
+  .footer__copywright {
+    background-color: var(--white);
+  }
+
+  .footer__copywright-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & small {
+      display: none;
+      font-size: 0.875rem;
+      line-height: var(--line-height-16);
+      color: var(--text-color);
+    }
+  }
+
+  @media (min-width: 48em) {
+    .footer__container {
+      flex-direction: row;
+      gap: 2em;
+      justify-content: space-between;
+
+      & > * {
+        flex: 1;
+        max-width: 24em;
+      }
+    }
+
+    .footer__subtitle {
+      line-height: var(--line-height-32);
+    }
+
+    .footer__title {
+      line-height: var(--line-height-40);
+      margin-bottom: 0.4em;
+    }
+
+    .footer__desc {
+      line-height: var(--line-height-24);
+    }
+
+    .footer__copywright-wrapper {
+      grid-row: 2 / 3;
+      justify-content: space-between;
+
+      & small {
+        display: initial;
+      }
+    }
+  }
+
+  @media (min-width: 90em) {
+    .footer__subtitle {
+      margin-bottom: 0.1666em;
+    }
+
+    .footer__title {
+      letter-spacing: -0.4px;
+    }
+  }
+</style>

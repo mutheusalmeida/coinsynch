@@ -104,6 +104,7 @@ const {
     --line-height-14: 1.1428;
     --line-height-14-base-12: 1.1666;
     --line-height-24: 1.5;
+    --line-height-24-base-14: 1.7142;
     --line-height-24-base-20: 1.2;
     --line-height-32: 1.3333;
     --line-height-40: 1.25;
@@ -115,6 +116,7 @@ const {
 
     --spacing-max: 7rem;
     --spacing-min: 1rem;
+    --spacing-speed: 8;
 
     --header-height: 81px;
 
@@ -173,7 +175,10 @@ const {
 
   .fluid-spacing {
     --fluid-spacing-calc: max(
-      min(var(--spacing-max), calc((100vw - (20rem - var(--spacing-max))) / 8)),
+      min(
+        var(--spacing-max),
+        calc((100vw - (20rem - var(--spacing-max))) / var(--spacing-speed))
+      ),
       var(--spacing-min)
     );
   }
