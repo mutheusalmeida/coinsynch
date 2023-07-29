@@ -16,7 +16,7 @@ export const NewsletterForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isSubmitted, isValidating },
+    formState: { errors, isSubmitting, isSubmitted },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   })
@@ -71,7 +71,7 @@ export const NewsletterForm = () => {
         )}
       </S.FormWrapper>
 
-      {result && !isValidating && <S.Message success>{result}</S.Message>}
+      {result && <S.Message success>{result}</S.Message>}
 
       <S.FormButton disabled={isSubmitting}>Subscribe</S.FormButton>
     </S.Form>
