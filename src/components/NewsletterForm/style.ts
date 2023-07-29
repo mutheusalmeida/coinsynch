@@ -61,7 +61,6 @@ export const FormInput = styled.input`
 
 export const FormButton = styled.button`
   border: none;
-  padding: 0;
   cursor: pointer;
   width: 100%;
   min-width: max-content;

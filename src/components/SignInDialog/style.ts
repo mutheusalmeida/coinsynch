@@ -1,80 +1,80 @@
-import styled, { css } from 'styled-components'
-
-type MessageType = {
-  hasError?: boolean
-  success?: boolean
-}
+import styled from 'styled-components'
 
 export const Form = styled.form`
-  --spacing-min: 3.5rem;
-  --spacing-max: 7.5rem;
-
-  width: 100%;
-
-  @media (min-width: 48em) {
-    padding-bottom: 0 !important;
-  }
-`
-
-export const FormWrapper = styled.fieldset`
-  all: unset;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
-  margin-bottom: 1em;
+  gap: 1em;
+  width: 100%;
+`
 
-  @media (min-width: 48em) {
-    margin-bottom: 1.25em;
+export const InputWrapper = styled.div`
+  display: flex;
+  gap: 0.5em;
+  padding: 0 1em;
+  border-radius: 0.375em;
+  border: 1px solid var(--gray-300);
+  font-size: 1rem;
+  min-height: 2.875em;
+  line-height: 2.875em;
+  position: relative;
+  align-items: center;
+  margin-bottom: 0.5em;
+
+  &:last-child {
+    position: absolute;
+    right: 1em;
+  }
+
+  & svg {
+    min-width: 1em;
+    min-height: 1em;
   }
 `
 
-export const FormLabel = styled.label`
-  font-size: 0.875rem;
-  line-height: var(--line-height-16);
+export const ActionLink = styled.span`
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  line-height: 1.1666em;
+  margin-top: -1rem;
+  align-self: flex-end;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
-export const FormInput = styled.input`
-  color: var(--gray-400);
-  font-size: 1rem;
-  padding: 0 1em;
-  min-height: 2.5em;
-  line-height: 2.5em;
-  border: none;
-  border-radius: 0.375em;
-  background-color: var(--white);
-  box-shadow: var(--box-shadow-lg);
+export const Input = styled.input`
+  all: unset;
+  height: 100%;
+  width: 100%;
+  color: inherit;
+
+  &:focus {
+    outline: none;
+  }
 
   &::placeholder {
-    color: inherit;
+    color: rgb(93, 102, 112, 0.55);
   }
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  @media (min-width: 48em) {
-    min-height: 3em;
-    line-height: 3em;
   }
 `
 
 export const FormButton = styled.button`
   border: none;
-  padding: 0;
   cursor: pointer;
   width: 100%;
   min-width: max-content;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   transition:
     color,
     background-color 0.2s ease;
   box-shadow: var(--box-shadow-lg);
   max-width: 100%;
-  padding: 0 1em;
   background-color: var(--orange-500);
   color: var(--white);
   border-radius: 7.1428em;
@@ -89,39 +89,32 @@ export const FormButton = styled.button`
     cursor: not-allowed;
   }
 
-  font-size: 0.875rem;
-  min-height: 2.8571em;
-
-  @media (min-width: 48em) {
-    gap: 10px;
-    padding: 0 1.5em;
-    font-size: 1rem;
-    min-height: 3em;
-  }
+  padding: 0 1.5em;
+  font-size: 1rem;
+  min-height: 3em;
 `
 
-export const Message = styled.span.withConfig({
-  shouldForwardProp: (prop) => 'hasError' !== prop && 'success' !== prop,
-})<MessageType>`
+export const Message = styled.span`
   padding: 0 0.5em;
   font-size: 0.875rem;
+  margin-top: -1rem;
+  color: var(--red-700);
+`
 
-  ${({ hasError }) =>
-    hasError &&
-    css`
-      color: var(--red-700);
-    `}
+export const CloseBtn = styled.button`
+  all: unset;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  cursor: pointer;
+`
 
-  ${({ success }) =>
-    success &&
-    css`
-      color: var(--orange-200);
-      display: inline-block;
-      margin-top: -0.75em;
-      margin-bottom: 1em;
+export const Logo = styled.span`
+  font-weight: 700;
+  color: var(--gray-500);
+`
 
-      @media (min-width: 48em) {
-        margin-bottom: 1.25em;
-      }
-    `}
+export const Heighlight = styled.span`
+  color: var(--orange-500);
+  font-weight: 700;
 `

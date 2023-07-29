@@ -1,5 +1,6 @@
 import react from '@astrojs/react'
 import { defineConfig } from 'astro/config'
+import viteSvgr from 'vite-plugin-svgr'
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,4 +9,7 @@ export default defineConfig({
     assets: true,
   },
   output: 'server',
+  vite: {
+    plugins: [viteSvgr()],
+  },
 })

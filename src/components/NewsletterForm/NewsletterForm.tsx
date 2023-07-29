@@ -50,15 +50,12 @@ export const NewsletterForm = () => {
   return (
     <S.Form
       onSubmit={handleSubmit(onSubmit)}
-      className="subscribe-form fluid-spacing fluid-pb"
+      className="fluid-spacing fluid-pb"
     >
-      <S.FormWrapper className="subscribe-form__wrapper">
-        <S.FormLabel className="subscribe-form__label" htmlFor="email">
-          Email
-        </S.FormLabel>
+      <S.FormWrapper>
+        <S.FormLabel htmlFor="email">Email</S.FormLabel>
 
         <S.FormInput
-          className="subscribe-form__input"
           id="email"
           type="email"
           placeholder="Email"

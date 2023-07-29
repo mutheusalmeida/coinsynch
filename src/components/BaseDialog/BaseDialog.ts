@@ -51,6 +51,10 @@ export const Content = styled(Dialog.Content)`
   padding: 1em;
   animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
 
   &:focus {
     outline: none;
@@ -67,9 +71,16 @@ export const Content = styled(Dialog.Content)`
 `
 
 export const Title = styled(Dialog.Title)`
-  margin: 0;
-  font-weight: 500;
-  font-size: 17px;
+  --font-size-min: var(--font-size-16);
+  --font-size-max: var(--font-size-24);
+  line-height: var(--line-height-24);
+  font-weight: 400;
+  margin-top: 0.625em;
+
+  @media (min-width: 48em) {
+    margin-top: 0;
+    line-height: var(--line-height-32);
+  }
 `
 
 export const Description = styled(Dialog.Description)`
