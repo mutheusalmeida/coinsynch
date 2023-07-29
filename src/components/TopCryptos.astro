@@ -1,6 +1,5 @@
 ---
 import TopCryptosItem from './TopCryptosItem.astro'
-import minusIcon from '@/assets/minus-icon.svg'
 import plusIcon from '@/assets/plus-icon.svg'
 import type { IconRequestType } from '@/resources/types'
 import Image from 'astro/components/Image.astro'
@@ -216,9 +215,7 @@ if (response?.ok) {
         <button class="cryptos-tbody__view-more" data-js="expander-list-toggle">
           <span class="text">View more</span>
 
-          <Image class="plus" src={plusIcon} alt="Expand icon" />
-
-          <Image class="minus" src={minusIcon} alt="Expand icon" />
+          <Image class="icon" src={plusIcon} alt="Expand icon" />
         </button>
       </div>
     </div>
@@ -330,24 +327,22 @@ if (response?.ok) {
 <script>
   const expander = document.querySelector('[data-js="expander-list"]')
   const toggle = document.querySelector('[data-js="expander-list-toggle"]')
+  import { default as minusIcon } from '@/assets/minus-icon.svg'
+  import { default as plusIcon } from '@/assets/plus-icon.svg'
 
   if (toggle && expander) {
     toggle.addEventListener('click', () => {
       expander.classList.toggle('expanded')
-      const iconMinus = toggle.querySelector<HTMLImageElement>('.minus')
-      const iconPlus = toggle.querySelector<HTMLImageElement>('.plus')
-      const text = toggle.querySelector<HTMLImageElement>('.text')
+      const icon = toggle.querySelector<HTMLImageElement>('.icon')
+      const text = toggle.querySelector<HTMLSpanElement>('.text')
 
-      if (iconMinus && iconPlus && text) {
+      if (icon && text) {
         if (expander.classList.contains('expanded')) {
           text.textContent = 'View less'
-
-          iconMinus.style.display = 'initial'
-          iconPlus.style.display = 'none'
+          icon.src = minusIcon.src
         } else {
           text.textContent = 'View more'
-          iconMinus.style.display = 'none'
-          iconPlus.style.display = 'Initial'
+          icon.src = plusIcon.src
         }
       }
     })
