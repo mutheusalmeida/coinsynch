@@ -16,7 +16,8 @@ export const Form = styled.form`
   }
 `
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.fieldset`
+  all: unset;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
