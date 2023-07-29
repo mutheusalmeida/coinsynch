@@ -15,13 +15,19 @@ const { as: Tag, classes, ...props } = Astro.props
   aria-label="Main navigation"
 >
   <ul class="list">
-    <li class="list__item"><a href="#about-us">About us</a></li>
-    <li class="list__item"><a href="#top-cryptos">Top cryptos</a></li>
+    <li data-js="close-modal" class="list__item">
+      <a href="#about-us">About us</a>
+    </li>
+    <li data-js="close-modal" class="list__item">
+      <a href="#top-cryptos">Top cryptos</a>
+    </li>
   </ul>
 
   <ul class="list">
     <HomeDialog client:only="react">
-      <li slot="trigger" class="list__item"><Button>Sign in</Button></li>
+      <li slot="trigger" data-js="close-modal" class="list__item">
+        <Button>Sign in</Button>
+      </li>
     </HomeDialog>
 
     <li class="list__item">

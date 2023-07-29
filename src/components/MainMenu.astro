@@ -49,7 +49,7 @@ import Image from 'astro/components/Image.astro'
   }
 
   .modal {
-    width: 100%;
+    width: 100svw;
     height: 100svh;
     position: fixed;
     top: 0;
@@ -59,8 +59,8 @@ import Image from 'astro/components/Image.astro'
     visibility: hidden;
     opacity: 0;
     transition:
-      visibility 0.25s ease-in,
-      opacity 0.25s ease-in;
+      visibility 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 150ms cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 15;
   }
 
@@ -132,13 +132,14 @@ import Image from 'astro/components/Image.astro'
 
 <script>
   const modalHamburger = document.querySelector('[data-js="modal-hamburger"')
-  const closeModal = document.querySelector('[data-js="close-modal"]')
   const modal = document.querySelector('[data-js="modal"]')
+  const closeModal = modal?.querySelectorAll('[data-js="close-modal"]')
 
   const close = (rect: DOMRect) => {
     modal?.classList.remove('active')
     document.body.classList.remove('no-scroll')
     document.body.style.removeProperty('top')
+    document.body.style.removeProperty('margin-right')
     document.documentElement.scrollTop = Math.abs(rect.top)
   }
 
@@ -146,10 +147,15 @@ import Image from 'astro/components/Image.astro'
     modal?.classList.add('active')
 
     const rect = document.body.getBoundingClientRect()
+    const scrollbarWidth = `${window.innerWidth - rect.width}px`
+
     document.body.classList.add('no-scroll')
     document.body.style.top = `${rect.top}px`
+    document.body.style.marginRight = scrollbarWidth
 
-    closeModal?.addEventListener('click', () => close(rect))
+    closeModal?.forEach((item) =>
+      item.addEventListener('click', () => close(rect))
+    )
   }
 
   modalHamburger?.addEventListener('click', open)
