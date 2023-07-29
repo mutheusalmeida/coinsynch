@@ -5,6 +5,10 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 1em;
   width: 100%;
+
+  @media (min-width: 90em) {
+    gap: 1.5em;
+  }
 `
 
 export const InputWrapper = styled.div`
@@ -37,9 +41,14 @@ export const ActionLink = styled.span`
   line-height: 1.1666em;
   margin-top: -1rem;
   align-self: flex-end;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
+  }
+
+  @media (min-width: 90em) {
+    margin-top: -1.5rem;
   }
 `
 
@@ -99,6 +108,10 @@ export const Message = styled.span`
   font-size: 0.875rem;
   margin-top: -1rem;
   color: var(--red-700);
+
+  @media (min-width: 90em) {
+    margin-top: -1.5rem;
+  }
 `
 
 export const CloseBtn = styled.button`

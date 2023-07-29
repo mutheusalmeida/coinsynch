@@ -83,8 +83,4 @@ export const Title = styled(Dialog.Title)`
   }
 `
 
-export const Description = styled(Dialog.Description)`
-  margin: 10px 0 20px;
-  font-size: 15px;
-  line-height: 1.5;
-`
+export const Description = styled(Dialog.Description)``
