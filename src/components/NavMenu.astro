@@ -1,4 +1,5 @@
 ---
+import { HomeDialog } from '@/components/HomeDialog'
 import type { HTMLTag, Polymorphic } from 'astro/types'
 import Button from './Button.astro'
 
@@ -19,7 +20,10 @@ const { as: Tag, classes, ...props } = Astro.props
   </ul>
 
   <ul class="list">
-    <li class="list__item"><Button>Sign in</Button></li>
+    <HomeDialog client:only="react">
+      <li slot="trigger" class="list__item"><Button>Sign in</Button></li>
+    </HomeDialog>
+
     <li class="list__item">
       <Button classes="button--sign-up" size="sm" variant="primary">
         Sign up
