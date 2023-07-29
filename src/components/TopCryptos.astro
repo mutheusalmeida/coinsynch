@@ -99,15 +99,7 @@ let fallbackIcons: IconRequestType[] = [
   },
 ]
 
-const response = await fetch(
-  `${import.meta.env.COINAPI_BASE_URL}/assets/icons/32`,
-  {
-    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-  }
-)
-
-const icons: IconRequestType[] = await response.json()
-
+// format icons
 function formatIcons(
   icons: IconRequestType[],
   asset: {
@@ -129,14 +121,29 @@ function formatIcons(
   }, {})
 }
 
-const data = assets.map((asset) => {
-  // request returns an object on limit request error
-  if (Array.isArray(icons)) {
-    return formatIcons(icons, asset)
-  } else {
-    return formatIcons(fallbackIcons, asset)
-  }
-}) as DataType[]
+let response
+let data: DataType[] | null = null
+
+try {
+  response = await fetch(
+    `${import.meta.env.COINAPI_BASE_URL}/assets/icons/32`,
+    {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+    }
+  )
+} catch (error) {
+  console.log('There was an error', error)
+  data = assets.map((asset) => formatIcons(fallbackIcons, asset)) as DataType[]
+}
+
+if (response?.ok) {
+  let icons: IconRequestType[] = await response.json()
+
+  data = assets.map((asset) => formatIcons(icons, asset)) as DataType[]
+} else {
+  console.log(`HTTP Response Code: ${response?.status}`)
+  data = assets.map((asset) => formatIcons(fallbackIcons, asset)) as DataType[]
+}
 ---
 
 <div

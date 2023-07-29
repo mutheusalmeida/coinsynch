@@ -104,7 +104,6 @@ export const Message = styled.span.withConfig({
 })<MessageType>`
   padding: 0 0.5em;
   font-size: 0.875rem;
-  font-weight: 600;
 
   ${({ hasError }) =>
     hasError &&

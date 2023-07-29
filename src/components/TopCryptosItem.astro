@@ -13,52 +13,60 @@ type Props = {
 
 const { name, url, id, index } = Astro.props
 
-const currentRateResponse = await fetch(
-  `${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`,
-  {
-    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-  }
-)
+let currentRateResponse
+let oldRateResponse
+let asset: RateDataType | null = null
 
-const oldRateResponse = await fetch(
-  `${
-    import.meta.env.COINAPI_BASE_URL
-  }/exchangerate/${id}/USD/history?period_id=1DAY&limit=1`,
-  {
-    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-  }
-)
+try {
+  currentRateResponse = await fetch(
+    `${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`,
+    {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+    }
+  )
+  oldRateResponse = await fetch(
+    `${
+      import.meta.env.COINAPI_BASE_URL
+    }/exchangerate/${id}/USD/history?period_id=1DAY&limit=1`,
+    {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+    }
+  )
+} catch (error) {
+  console.log('There was an error', error)
+}
 
-const currentRateData = await currentRateResponse.json()
+if (currentRateResponse?.ok && oldRateResponse?.ok) {
+  asset = [await currentRateResponse.json(), await oldRateResponse.json()]
+    .flat()
+    .reduce((acc, curr) => {
+      if ('rate' in curr) {
+        return {
+          ...acc,
+          rate: curr.rate,
+        }
+      }
 
-const oldRateData = await oldRateResponse.json()
+      if ('rate' in acc && 'rate_close' in curr) {
+        return {
+          ...acc,
+          variation: getVariationRate(acc.rate, curr.rate_close),
+        }
+      }
+
+      return {
+        ...acc,
+      }
+    }, {})
+} else {
+  console.log(`First HTTP Response Code: ${currentRateResponse?.status}`)
+  console.log(`Second HTTP Response Code: ${oldRateResponse?.status}`)
+}
 
 const mock = {
   rate: 0.9996882567431848,
   variation: '+0.873',
 }
-
-const asset: RateDataType = [currentRateData, oldRateData]
-  .flat()
-  .reduce((acc, curr) => {
-    if ('rate' in curr) {
-      return {
-        ...acc,
-        rate: curr.rate,
-      }
-    }
-
-    if ('rate' in acc && 'rate_close' in curr) {
-      return {
-        ...acc,
-        variation: getVariationRate(acc.rate, curr.rate_close),
-      }
-    }
-
-    return {
-      ...acc,
-    }
-  }, {})
 ---
 
 <div data-id={id} data-js="crypto-expandable" class="crypto-expandable">
@@ -95,7 +103,7 @@ const asset: RateDataType = [currentRateData, oldRateData]
           <span class="cryptos-thead__th">Price</span>
 
           <span class="cryptos-tbody__td"
-            >US {formatCurrency(asset.rate || mock.rate)}</span
+            >US {formatCurrency(asset?.rate || mock.rate)}</span
           >
         </div>
 
@@ -106,14 +114,14 @@ const asset: RateDataType = [currentRateData, oldRateData]
             class:list={[
               'cryptos-tbody__td',
               {
-                'cryptos-tbody__td--rise': asset.variation
-                  ? asset.variation.startsWith('+')
+                'cryptos-tbody__td--rise': asset?.variation
+                  ? asset?.variation.startsWith('+')
                   : mock.variation.startsWith('+'),
-                'cryptos-tbody__td--drop': asset.variation
-                  ? asset.variation.startsWith('-')
+                'cryptos-tbody__td--drop': asset?.variation
+                  ? asset?.variation.startsWith('-')
                   : mock.variation.startsWith('-'),
               },
-            ]}>{asset.variation || mock.variation}</span
+            ]}>{asset?.variation || mock.variation}</span
           >
         </div>
       </div>
@@ -140,21 +148,21 @@ const asset: RateDataType = [currentRateData, oldRateData]
   </div>
 
   <span class="cryptos-tbody__td"
-    >US {formatCurrency(asset.rate || mock.rate)}</span
+    >US {formatCurrency(asset?.rate || mock.rate)}</span
   >
 
   <span
     class:list={[
       'cryptos-tbody__td',
       {
-        'cryptos-tbody__td--rise': asset.variation
-          ? asset.variation.startsWith('+')
+        'cryptos-tbody__td--rise': asset?.variation
+          ? asset?.variation.startsWith('+')
           : mock.variation.startsWith('+'),
-        'cryptos-tbody__td--drop': asset.variation
-          ? asset.variation.startsWith('-')
+        'cryptos-tbody__td--drop': asset?.variation
+          ? asset?.variation.startsWith('-')
           : mock.variation.startsWith('-'),
       },
-    ]}>{asset.variation || mock.variation}</span
+    ]}>{asset?.variation || mock.variation}</span
   >
 
   <button class="cryptos-tbody__btn">Buy</button>

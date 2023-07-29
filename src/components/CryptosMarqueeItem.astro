@@ -1,79 +1,86 @@
 ---
 import type { RateDataType } from '@/resources/types'
 import { formatCurrency, getVariationRate } from '@/utils'
-
 type Props = {
   id: string
 }
 
 const { id } = Astro.props
 
-const currentRateResponse = await fetch(
-  `${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`,
-  {
-    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-  }
-)
+let currentRateResponse
+let oldRateResponse
+let asset: RateDataType | null = null
 
-const oldRateResponse = await fetch(
-  `${
-    import.meta.env.COINAPI_BASE_URL
-  }/exchangerate/${id}/USD/history?period_id=2HRS&limit=1`,
-  {
-    headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
-  }
-)
+try {
+  currentRateResponse = await fetch(
+    `${import.meta.env.COINAPI_BASE_URL}/exchangerate/${id}/USD`,
+    {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+    }
+  )
+  oldRateResponse = await fetch(
+    `${
+      import.meta.env.COINAPI_BASE_URL
+    }/exchangerate/${id}/USD/history?period_id=2HRS&limit=1`,
+    {
+      headers: { 'X-CoinAPI-Key': import.meta.env.COINAPI_KEY },
+    }
+  )
+} catch (error) {
+  console.log('There was an error', error)
+}
 
-const currentRateData = await currentRateResponse.json()
+if (currentRateResponse?.ok && oldRateResponse?.ok) {
+  asset = [await currentRateResponse.json(), await oldRateResponse.json()]
+    .flat()
+    .reduce((acc, curr) => {
+      if ('rate' in curr) {
+        return {
+          ...acc,
+          rate: curr.rate,
+        }
+      }
 
-const oldRateData = await oldRateResponse.json()
+      if ('rate' in acc && 'rate_close' in curr) {
+        return {
+          ...acc,
+          variation: getVariationRate(acc.rate, curr.rate_close),
+        }
+      }
+
+      return {
+        ...acc,
+      }
+    }, {})
+} else {
+  console.log(`First HTTP Response Code: ${currentRateResponse?.status}`)
+  console.log(`Second HTTP Response Code: ${oldRateResponse?.status}`)
+}
 
 const mock = {
   rate: 0.9996882567431848,
   variation: '+0.873',
 }
-
-const asset: RateDataType = [currentRateData, oldRateData]
-  .flat()
-  .reduce((acc, curr) => {
-    if ('rate' in curr) {
-      return {
-        ...acc,
-        rate: curr.rate,
-      }
-    }
-
-    if ('rate' in acc && 'rate_close' in curr) {
-      return {
-        ...acc,
-        variation: getVariationRate(acc.rate, curr.rate_close).slice(0, -1),
-      }
-    }
-
-    return {
-      ...acc,
-    }
-  }, {})
 ---
 
 <div class="cryptos-marquee__item">
   <span class="cryptos-marquee__coin">{id}</span>
 
-  <span>{formatCurrency(asset.rate || mock.rate)}</span>
+  <span>{formatCurrency(asset?.rate || mock.rate)}</span>
 
   <span
     class:list={[
       {
-        'cryptos-marquee--rise': asset.variation
-          ? asset.variation.startsWith('+')
+        'cryptos-marquee--rise': asset?.variation
+          ? asset?.variation.startsWith('+')
           : mock.variation.startsWith('+'),
-        'cryptos-marquee--drop': asset.variation
-          ? asset.variation.startsWith('-')
+        'cryptos-marquee--drop': asset?.variation
+          ? asset?.variation.startsWith('-')
           : mock.variation.startsWith('-'),
       },
     ]}
   >
-    {asset.variation || mock.variation}
+    {asset?.variation || mock.variation}
   </span>
 </div>
 
