@@ -1,5 +1,5 @@
 ---
-import { SignInDialog } from '@/components/SignInDialog'
+import { AuthDialog } from '@/components/AuthDialog'
 import type { HTMLTag, Polymorphic } from 'astro/types'
 import Button from './Button.astro'
 
@@ -24,11 +24,11 @@ const { as: Tag, classes, ...props } = Astro.props
   </ul>
 
   <ul class="list">
-    <SignInDialog client:only="react">
+    <AuthDialog defaultMode="sign-in" client:only="react">
       <li slot="trigger" data-js="close-modal" class="list__item">
         <Button>Sign in</Button>
       </li>
-    </SignInDialog>
+    </AuthDialog>
 
     <li class="list__item">
       <Button classes="button--sign-up" size="sm" variant="primary">
