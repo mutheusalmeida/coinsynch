@@ -34,13 +34,13 @@ export const SignInForm = () => {
       body: JSON.stringify(data),
     })
 
-    reset()
-
     const result = await response.json()
 
     if (result.token) {
       console.log(result.token)
     }
+
+    reset()
   }
 
   return (
@@ -49,7 +49,7 @@ export const SignInForm = () => {
         <EmailIcon />
 
         <Form.Input
-          id="email"
+          id="signin-email"
           type="email"
           placeholder="Email"
           disabled={isSubmitting}

@@ -55,6 +55,7 @@ export const Content = styled(Dialog.Content)`
   flex-direction: column;
   align-items: center;
   gap: 1.5em;
+  overflow-y: auto;
 
   &:focus {
     outline: none;

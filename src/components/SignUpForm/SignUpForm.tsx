@@ -9,6 +9,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+type SignUpFormProps = {
+  switchMode: (value: 'sign-in') => void
+}
+
 const formSchema = z
   .object({
     name: z.string().min(1, 'Name is required').max(100),
@@ -29,7 +33,7 @@ const formSchema = z
 
 type FormSchemaType = z.infer<typeof formSchema>
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ switchMode }: SignUpFormProps) => {
   const {
     register,
     handleSubmit,
@@ -45,13 +49,14 @@ export const SignUpForm = () => {
       body: JSON.stringify(data),
     })
 
-    reset()
-
     const result = await response.json()
 
-    if (result.token) {
-      console.log(result.token)
+    if (result.message) {
+      console.log(result.message)
     }
+
+    reset()
+    switchMode('sign-in')
   }
 
   return (

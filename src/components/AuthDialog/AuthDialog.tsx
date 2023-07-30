@@ -31,6 +31,10 @@ export const AuthDialog = ({ trigger, defaultMode }: AuthDialogProps) => {
     },
   }
 
+  const switchMode = (mode: typeof defaultMode) => {
+    setMode(mode)
+  }
+
   return (
     <Dialog.Root onOpenChange={() => setMode(defaultMode)}>
       <Dialog.Trigger asChild>
@@ -55,7 +59,7 @@ export const AuthDialog = ({ trigger, defaultMode }: AuthDialogProps) => {
             </S.Logo>
           </Dialog.Title>
 
-          {mode === 'sign-in' ? <SignInForm /> : <SignUpForm />}
+          {mode === 'sign-in' ? <SignInForm /> : <SignUpForm switchMode={switchMode} />}
 
           <S.AlternateWrapper>
             <S.AlternateMsg>{alternate[mode].message}</S.AlternateMsg>{' '}

@@ -29,13 +29,13 @@ export const NewsletterForm = () => {
       body: JSON.stringify(data),
     })
 
-    reset()
-
     const result = await response.json()
 
     if (result.message) {
       setResult(result.message)
     }
+
+    reset()
   }
 
   useEffect(() => {
