@@ -1,3 +1,4 @@
+import { Button } from '@/components/Form/FormButton'
 import styled, { css } from 'styled-components'
 
 type MessageType = {
@@ -59,40 +60,14 @@ export const FormInput = styled.input`
   }
 `
 
-export const FormButton = styled.button`
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  min-width: max-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition:
-    color,
-    background-color 0.2s ease;
-  box-shadow: var(--box-shadow-lg);
-  max-width: 100%;
+export const FormButton = styled(Button)`
   padding: 0 1em;
-  background-color: var(--orange-500);
-  color: var(--white);
   border-radius: 7.1428em;
-
-  &:hover {
-    color: var(--gray-200);
-    background-color: var(--orange-600);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
+  box-shadow: var(--box-shadow-lg);
   font-size: 0.875rem;
   min-height: 2.8571em;
 
   @media (min-width: 48em) {
-    gap: 10px;
     padding: 0 1.5em;
     font-size: 1rem;
     min-height: 3em;

@@ -32,7 +32,7 @@ export const AuthDialog = ({ trigger, defaultMode }: AuthDialogProps) => {
   }
 
   return (
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={() => setMode(defaultMode)}>
       <Dialog.Trigger asChild>
         <span>{trigger}</span>
       </Dialog.Trigger>

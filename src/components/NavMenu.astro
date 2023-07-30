@@ -30,11 +30,13 @@ const { as: Tag, classes, ...props } = Astro.props
       </li>
     </AuthDialog>
 
-    <li class="list__item">
-      <Button classes="button--sign-up" size="sm" variant="primary">
-        Sign up
-      </Button>
-    </li>
+    <AuthDialog defaultMode="sign-up" client:only="react">
+      <li slot="trigger" data-js="close-modal" class="list__item">
+        <Button classes="button--sign-up" size="sm" variant="primary">
+          Sign up
+        </Button>
+      </li>
+    </AuthDialog>
   </ul>
 </Tag>
 

@@ -1,5 +1,6 @@
 ---
 import AboutCarousel from './AboutCarousel.astro'
+import { AuthDialog } from './AuthDialog'
 import Button from './Button.astro'
 ---
 
@@ -36,14 +37,17 @@ import Button from './Button.astro'
         be able to easily and securely send and receive Bitcoin.
       </p>
 
-      <Button
-        size="md"
-        variant="primary"
-        classes="button--about-header fluid-type"
-        style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
-      >
-        Sign up now
-      </Button>
+      <AuthDialog defaultMode="sign-up" client:only="react">
+        <Button
+          slot="trigger"
+          size="md"
+          variant="primary"
+          classes="button--about-header fluid-type"
+          style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+        >
+          Sign up now
+        </Button>
+      </AuthDialog>
     </div>
   </div>
 

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { useEffect, useState } from 'react'
+
 import * as S from './style'
 
 const formSchema = z.object({
@@ -63,9 +64,7 @@ export const NewsletterForm = () => {
           {...register('email')}
         />
 
-        {errors.email && (
-          <S.Message hasError>{errors.email?.message}</S.Message>
-        )}
+        {errors.email && <S.Message hasError>{errors.email.message}</S.Message>}
       </S.FormWrapper>
 
       {result && <S.Message success>{result}</S.Message>}

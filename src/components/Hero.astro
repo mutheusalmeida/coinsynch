@@ -1,6 +1,7 @@
 ---
 import arrowIcon from '@/assets/arrow-icon.svg'
 import Image from 'astro/components/Image.astro'
+import { AuthDialog } from './AuthDialog'
 import Button from './Button.astro'
 import HeroCarousel from './HeroCarousel.astro'
 ---
@@ -29,17 +30,20 @@ import HeroCarousel from './HeroCarousel.astro'
         </p>
       </div>
 
-      <Button
-        size="md"
-        variant="primary"
-        textTransform="uppercase"
-        classes="button--sign-up-hero fluid-type"
-        style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
-      >
-        Sign up now
+      <AuthDialog defaultMode="sign-up" client:only="react">
+        <Button
+          slot="trigger"
+          size="md"
+          variant="primary"
+          textTransform="uppercase"
+          classes="button--sign-up-hero fluid-type"
+          style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+        >
+          Sign up now
 
-        <Image src={arrowIcon} alt="Arrow" />
-      </Button>
+          <Image src={arrowIcon} alt="Arrow" />
+        </Button>
+      </AuthDialog>
 
       <div
         class="tags fluid-type fluid-spacing fluid-mt"
@@ -102,7 +106,7 @@ import HeroCarousel from './HeroCarousel.astro'
   }
 
   .button--sign-up-hero {
-    max-width: 12.8571em;
+    min-width: 12.8571em;
   }
 
   .tags {
@@ -139,7 +143,7 @@ import HeroCarousel from './HeroCarousel.astro'
     }
 
     .button--sign-up-hero {
-      max-width: 14.5em;
+      min-width: 14.5em;
       min-height: 2.2857em;
       line-height: var(--line-height-40);
     }
@@ -155,7 +159,7 @@ import HeroCarousel from './HeroCarousel.astro'
     }
 
     .button--sign-up-hero {
-      max-width: 17.375em;
+      min-width: 17.375em;
       min-height: 3em;
       line-height: var(--line-height-56);
     }

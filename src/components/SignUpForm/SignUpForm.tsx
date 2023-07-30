@@ -2,6 +2,8 @@ import * as S from './style'
 
 import { ReactComponent as EmailIcon } from '@/assets/email-icon.svg'
 import { ReactComponent as LockerIcon } from '@/assets/locker-icon.svg'
+import { ReactComponent as UserIcon } from '@/assets/user-icon.svg'
+import * as Form from '@/components/Form'
 import { FormPassword } from '@/components/FormPassword'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -9,7 +11,8 @@ import { z } from 'zod'
 
 const formSchema = z
   .object({
-    email: z.string().min(1, 'Please enter an email').email('Invalid email'),
+    name: z.string().min(1, 'Name is required').max(100),
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
     password: z
       .string()
       .min(1, 'Password is required')
@@ -37,7 +40,7 @@ export const SignUpForm = () => {
   })
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    const response = await fetch('/api/signin', {
+    const response = await fetch('/api/signup', {
       method: 'POST',
       body: JSON.stringify(data),
     })
@@ -52,28 +55,44 @@ export const SignUpForm = () => {
   }
 
   return (
-    <S.Form onSubmit={handleSubmit(onSubmit)}>
-      <S.InputWrapper>
+    <Form.Root onSubmit={handleSubmit(onSubmit)}>
+      <Form.InputRoot>
+        <UserIcon />
+
+        <Form.Input
+          id="name"
+          type="name"
+          placeholder="Name"
+          disabled={isSubmitting}
+          {...register('name')}
+        />
+      </Form.InputRoot>
+
+      {errors.name && <Form.Error>{errors.name.message}</Form.Error>}
+
+      <Form.InputRoot>
         <EmailIcon />
 
-        <S.Input
+        <Form.Input
+          id="signup-email"
           type="email"
           placeholder="Email"
           disabled={isSubmitting}
           {...register('email')}
         />
-      </S.InputWrapper>
+      </Form.InputRoot>
 
-      {errors.email && <S.Message>{errors.email.message}</S.Message>}
+      {errors.email && <Form.Error>{errors.email.message}</Form.Error>}
 
-      <S.InputWrapper>
+      <Form.InputRoot>
         <LockerIcon />
 
         {/* use of render props patters */}
 
         <FormPassword>
           {({ isVisible }) => (
-            <S.Input
+            <Form.Input
+              id="password"
               type={isVisible ? 'text' : 'password'}
               placeholder="Password"
               disabled={isSubmitting}
@@ -81,18 +100,19 @@ export const SignUpForm = () => {
             />
           )}
         </FormPassword>
-      </S.InputWrapper>
+      </Form.InputRoot>
 
-      {errors.password && <S.Message>{errors.password.message}</S.Message>}
+      {errors.password && <Form.Error>{errors.password.message}</Form.Error>}
 
-      <S.InputWrapper>
+      <Form.InputRoot>
         <LockerIcon />
 
         {/* use of render props patters */}
 
         <FormPassword>
           {({ isVisible }) => (
-            <S.Input
+            <Form.Input
+              id="confirmPassword"
               type={isVisible ? 'text' : 'password'}
               placeholder="Confirm password"
               disabled={isSubmitting}
@@ -100,10 +120,10 @@ export const SignUpForm = () => {
             />
           )}
         </FormPassword>
-      </S.InputWrapper>
+      </Form.InputRoot>
 
       {errors.confirmPassword && (
-        <S.Message>{errors.confirmPassword.message}</S.Message>
+        <Form.Error>{errors.confirmPassword.message}</Form.Error>
       )}
 
       <S.TermsWrapper>
@@ -112,6 +132,7 @@ export const SignUpForm = () => {
             id="terms"
             aria-describedby="terms"
             type="checkbox"
+            disabled={isSubmitting}
             {...register('terms')}
           />
         </S.Checkbox>
@@ -122,9 +143,9 @@ export const SignUpForm = () => {
         </S.Terms>
       </S.TermsWrapper>
 
-      {errors.terms && <S.Message>{errors.terms.message}</S.Message>}
+      {errors.terms && <Form.Error>{errors.terms.message}</Form.Error>}
 
-      <S.FormButton disabled={isSubmitting}>Subscribe</S.FormButton>
-    </S.Form>
+      <Form.Button disabled={isSubmitting}>Sign up</Form.Button>
+    </Form.Root>
   )
 }

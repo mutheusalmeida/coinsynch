@@ -2,6 +2,7 @@ import * as S from './style'
 
 import { ReactComponent as EmailIcon } from '@/assets/email-icon.svg'
 import { ReactComponent as LockerIcon } from '@/assets/locker-icon.svg'
+import * as Form from '@/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -28,7 +29,7 @@ export const SignInForm = () => {
   })
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    const response = await fetch('/api/signup', {
+    const response = await fetch('/api/signin', {
       method: 'POST',
       body: JSON.stringify(data),
     })
@@ -43,28 +44,30 @@ export const SignInForm = () => {
   }
 
   return (
-    <S.Form onSubmit={handleSubmit(onSubmit)}>
-      <S.InputWrapper>
+    <Form.Root onSubmit={handleSubmit(onSubmit)}>
+      <Form.InputRoot>
         <EmailIcon />
 
-        <S.Input
+        <Form.Input
+          id="email"
           type="email"
           placeholder="Email"
           disabled={isSubmitting}
           {...register('email')}
         />
-      </S.InputWrapper>
+      </Form.InputRoot>
 
-      {errors.email && <S.Message>{errors.email?.message}</S.Message>}
+      {errors.email && <Form.Error>{errors.email.message}</Form.Error>}
 
-      <S.InputWrapper>
+      <Form.InputRoot>
         <LockerIcon />
 
         {/* use of render props patters */}
 
         <FormPassword>
           {({ isVisible }) => (
-            <S.Input
+            <Form.Input
+              id="password"
               type={isVisible ? 'text' : 'password'}
               placeholder="Password"
               disabled={isSubmitting}
@@ -72,13 +75,13 @@ export const SignInForm = () => {
             />
           )}
         </FormPassword>
-      </S.InputWrapper>
+      </Form.InputRoot>
 
-      {errors.password && <S.Message>{errors.password?.message}</S.Message>}
+      {errors.password && <Form.Error>{errors.password.message}</Form.Error>}
 
       <S.ActionLink>Forgot password?</S.ActionLink>
 
-      <S.FormButton disabled={isSubmitting}>Subscribe</S.FormButton>
-    </S.Form>
+      <Form.Button disabled={isSubmitting}>Sign in</Form.Button>
+    </Form.Root>
   )
 }
