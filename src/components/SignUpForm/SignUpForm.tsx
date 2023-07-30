@@ -15,6 +15,9 @@ const formSchema = z
       .min(1, 'Password is required')
       .min(8, 'Password must have at least 8 characters'),
     confirmPassword: z.string().min(1, 'Password confirmation is required'),
+    terms: z.literal(true, {
+      errorMap: () => ({ message: 'You must accept the terms and conditions' }),
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
@@ -80,6 +83,8 @@ export const SignUpForm = () => {
         </FormPassword>
       </S.InputWrapper>
 
+      {errors.password && <S.Message>{errors.password.message}</S.Message>}
+
       <S.InputWrapper>
         <LockerIcon />
 
@@ -101,7 +106,23 @@ export const SignUpForm = () => {
         <S.Message>{errors.confirmPassword.message}</S.Message>
       )}
 
-      <S.ActionLink>Forgot password?</S.ActionLink>
+      <S.TermsWrapper>
+        <S.Checkbox>
+          <input
+            id="terms"
+            aria-describedby="terms"
+            type="checkbox"
+            {...register('terms')}
+          />
+        </S.Checkbox>
+
+        <S.Terms htmlFor="terms">
+          I have read and accept the{' '}
+          <span>Privacy Policy and Terms of User Sign up.</span>
+        </S.Terms>
+      </S.TermsWrapper>
+
+      {errors.terms && <S.Message>{errors.terms.message}</S.Message>}
 
       <S.FormButton disabled={isSubmitting}>Subscribe</S.FormButton>
     </S.Form>
