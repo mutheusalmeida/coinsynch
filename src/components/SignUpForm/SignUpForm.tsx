@@ -51,12 +51,10 @@ export const SignUpForm = ({ switchMode }: SignUpFormProps) => {
 
     const result = await response.json()
 
-    if (result.message) {
-      console.log(result.message)
+    if (result.ok) {
+      reset()
+      switchMode('sign-in')
     }
-
-    reset()
-    switchMode('sign-in')
   }
 
   return (

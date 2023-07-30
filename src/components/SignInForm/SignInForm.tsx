@@ -36,11 +36,10 @@ export const SignInForm = () => {
 
     const result = await response.json()
 
-    if (result.token) {
-      console.log(result.token)
+    if (result.ok) {
+      reset()
+      window.location.assign('/dashboard')
     }
-
-    reset()
   }
 
   return (

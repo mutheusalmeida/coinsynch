@@ -1,10 +1,21 @@
 ---
 import { Root } from '../../components/Root'
 import Layout from '../../layouts/Layout.astro'
+export const prerender = true
 
 export function getStaticPaths() {
   return [{ params: { route: undefined } }, { params: { route: 'analytics' } }]
 }
+
+let user = Astro.cookies.get('user')
+
+if (!user.value) {
+  return Astro.redirect('/')
+}
+
+user = user.json()
+
+console.log(user)
 ---
 
 <Layout>
