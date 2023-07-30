@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useUser } from '@/contexts/UserContext'
 import { Link } from 'react-router-dom'
 
 export const Dashboard = () => {
-  const [count] = useState(0)
-  const [, setName] = useState('name')
-
-  useEffect(() => {
-    setName(`${count} 1`)
-  }, [count])
+  const { user } = useUser()
 
   return (
     <>
-      <h1>Dashboard main content</h1>
+      <h1>Welcome back, {user.name}</h1>
 
       <Link to="/analytics">Go to Analytics</Link>
     </>

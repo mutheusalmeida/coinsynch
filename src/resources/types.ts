@@ -26,3 +26,9 @@ export type IconRequestType = {
 }
 
 export type RequestDataType = [NewDataType, OldDataType[]]
+
+export type UserType = {
+  name?: string
+  email: string
+  password: string
+}

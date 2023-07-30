@@ -4,6 +4,7 @@ import { ReactComponent as EmailIcon } from '@/assets/email-icon.svg'
 import { ReactComponent as LockerIcon } from '@/assets/locker-icon.svg'
 import * as Form from '@/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { FormPassword } from '../FormPassword'
@@ -19,6 +20,8 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>
 
 export const SignInForm = () => {
+  const [result, setResult] = useState('')
+
   const {
     register,
     handleSubmit,
@@ -39,6 +42,8 @@ export const SignInForm = () => {
     if (result.ok) {
       reset()
       window.location.assign('/dashboard')
+    } else {
+      setResult('Incorrect email or password')
     }
   }
 
@@ -77,6 +82,8 @@ export const SignInForm = () => {
       </Form.InputRoot>
 
       {errors.password && <Form.Error>{errors.password.message}</Form.Error>}
+
+      {result && <Form.Error>{result}</Form.Error>}
 
       <S.ActionLink>Forgot password?</S.ActionLink>
 

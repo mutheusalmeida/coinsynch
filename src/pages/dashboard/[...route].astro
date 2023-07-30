@@ -1,4 +1,5 @@
 ---
+import type { UserType } from '@/resources/types'
 import { Root } from '../../components/Root'
 import Layout from '../../layouts/Layout.astro'
 export const prerender = true
@@ -14,10 +15,8 @@ if (!user.value) {
 }
 
 user = user.json()
-
-console.log(user)
 ---
 
 <Layout>
-  <Root client:only />
+  <Root user={user as unknown as UserType} client:only />
 </Layout>
