@@ -16,7 +16,7 @@ A landing page and dashboard built using micro frontends with Astro.js, React.js
 
 ## Screenshots
 
-![App Screenshot](https://i.ibb.co/mFTBGVM/Frame-1.png)
+![App Screenshot](https://i.ibb.co/pXdN8YY/coinsynch.png)
 
 ## Run Locally
 
