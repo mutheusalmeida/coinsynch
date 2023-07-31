@@ -42,39 +42,43 @@ export const AuthDialog = ({ trigger, defaultMode }: AuthDialogProps) => {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay />
+        <Dialog.Overlay>
+          <Dialog.Content>
+            <Dialog.Close asChild>
+              <S.CloseBtn aria-label="Close">
+                <CloseIcon />
+              </S.CloseBtn>
+            </Dialog.Close>
 
-        <Dialog.Content>
-          <Dialog.Close asChild>
-            <S.CloseBtn aria-label="Close">
-              <CloseIcon />
-            </S.CloseBtn>
-          </Dialog.Close>
+            <Dialog.Title className="fluid-type">
+              <>{prettyMode} to </>
 
-          <Dialog.Title className="fluid-type">
-            <>{prettyMode} to </>
-
-            <S.Logo>
-              <S.Heighlight>Coin</S.Heighlight>Synch
-            </S.Logo>
-          </Dialog.Title>
-
-          {mode === 'sign-in' ? <SignInForm /> : <SignUpForm switchMode={switchMode} />}
-
-          <S.AlternateWrapper>
-            <S.AlternateMsg>{alternate[mode].message}</S.AlternateMsg>{' '}
-            <S.AlternateLink
-              onClick={() => {
-                setMode(alternate[mode].toPath as keyof typeof alternate)
-              }}
-            >
-              {alternate[mode].toLabel} to{' '}
               <S.Logo>
                 <S.Heighlight>Coin</S.Heighlight>Synch
               </S.Logo>
-            </S.AlternateLink>
-          </S.AlternateWrapper>
-        </Dialog.Content>
+            </Dialog.Title>
+
+            {mode === 'sign-in' ? (
+              <SignInForm />
+            ) : (
+              <SignUpForm switchMode={switchMode} />
+            )}
+
+            <S.AlternateWrapper>
+              <S.AlternateMsg>{alternate[mode].message}</S.AlternateMsg>{' '}
+              <S.AlternateLink
+                onClick={() => {
+                  setMode(alternate[mode].toPath as keyof typeof alternate)
+                }}
+              >
+                {alternate[mode].toLabel} to{' '}
+                <S.Logo>
+                  <S.Heighlight>Coin</S.Heighlight>Synch
+                </S.Logo>
+              </S.AlternateLink>
+            </S.AlternateWrapper>
+          </Dialog.Content>
+        </Dialog.Overlay>
       </Dialog.Portal>
     </Dialog.Root>
   )

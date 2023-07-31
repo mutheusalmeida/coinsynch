@@ -61,6 +61,11 @@ import Button from './Button.astro'
     grid-template-rows: var(--row);
     align-items: center;
     align-content: center;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      #f7f7f7 100%
+    );
   }
 
   .about__header {
@@ -88,7 +93,7 @@ import Button from './Button.astro'
 
   .button--about-header {
     display: none;
-    max-width: 11em;
+    min-width: 11em;
     font-weight: 400;
     margin-top: 2.5em;
   }
@@ -118,6 +123,7 @@ import Button from './Button.astro'
       grid-column: 8 / 13;
       grid-row: 1 / 2;
       padding-left: 2em !important;
+      margin-top: -7.5em;
 
       & h3 {
         line-height: var(--line-height-48);

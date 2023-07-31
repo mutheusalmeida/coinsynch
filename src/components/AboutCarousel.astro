@@ -150,6 +150,7 @@ const data = [
     min-height: 16.25em;
     padding: 1.5em;
     box-shadow: var(--box-shadow-lg);
+    background-color: var(--white);
   }
 
   .card__icon {
@@ -178,6 +179,7 @@ const data = [
     display: none;
     width: max-content;
     margin: 0 auto;
+    gap: 1.5em;
 
     & > div:nth-child(2) {
       justify-content: flex-end;
@@ -202,6 +204,10 @@ const data = [
       --slide-spacing: 1.5em;
     }
 
+    .embla__viewport {
+      padding-bottom: 5em;
+    }
+
     .embla__container {
       display: none !important;
     }
@@ -213,8 +219,8 @@ const data = [
     }
 
     .card__icon {
-      width: 2.4em;
-      height: 2.4em;
+      width: 4em;
+      height: 4em;
     }
 
     .card__subtitle {
@@ -233,10 +239,16 @@ const data = [
       --slide-spacing: 2em;
       grid-column: 1 / 8;
       grid-row: 1 / 2;
+      margin-top: 0 !important;
     }
 
     .embla__viewport {
+      padding-bottom: 7.5em;
       padding-right: 0 !important;
+    }
+
+    .cards {
+      gap: 2em;
     }
 
     .card__title {
