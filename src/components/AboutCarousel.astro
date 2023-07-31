@@ -29,9 +29,13 @@ const data = [
   style="--spacing-min: 1.5rem; --spacing-max: 2rem;"
 >
   <div
+    class="fluid-spacing fluid-pb"
+    style="--spacing-min: 1rem; --spacing-max: 1.5rem;"
+  >
+  <div
     data-js="slide-viewport-about"
-    class="embla__viewport fluid-spacing fluid-px"
-    style="--spacing-min: 2.5rem; --spacing-max: 7rem;"
+    class="embla__viewport fluid-spacing fluid-px fluid-pb"
+    style="--spacing-min: 2.5rem; --spacing-max: 6rem;"
   >
     <div class="embla__container">
       {
@@ -123,6 +127,7 @@ const data = [
         }
       </div>
     </div>
+    </div>
   </div>
 </div>
 
@@ -139,10 +144,6 @@ const data = [
     & > div:first-child {
       padding-left: 0;
     }
-  }
-
-  .embla__viewport {
-    padding-bottom: 3.5em;
   }
 
   .card {
@@ -204,10 +205,6 @@ const data = [
       --slide-spacing: 1.5em;
     }
 
-    .embla__viewport {
-      padding-bottom: 5em;
-    }
-
     .embla__container {
       display: none !important;
     }
@@ -243,7 +240,6 @@ const data = [
     }
 
     .embla__viewport {
-      padding-bottom: 7.5em;
       padding-right: 0 !important;
     }
 
