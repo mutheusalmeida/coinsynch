@@ -13,11 +13,9 @@ const overlayShow = keyframes`
 const contentShow = keyframes`
    from {
     opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
   }
 `
 
@@ -35,19 +33,18 @@ export const Overlay = styled(Dialog.Overlay)`
   inset: 0;
   animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 20;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
 `
 
 export const Content = styled(Dialog.Content)`
   background-color: white;
   border-radius: 0.5em;
   box-shadow: var(--box-shadow-dialog);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 85vw;
   max-width: 20em;
-  max-height: 85vh;
+  max-height: max-content;
   padding: 1em;
   animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 25;
@@ -55,7 +52,8 @@ export const Content = styled(Dialog.Content)`
   flex-direction: column;
   align-items: center;
   gap: 1.5em;
-  overflow-y: auto;
+  margin: 1.5em 0;
+  position: relative;
 
   &:focus {
     outline: none;
