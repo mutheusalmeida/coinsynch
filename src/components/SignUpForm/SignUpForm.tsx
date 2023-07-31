@@ -38,22 +38,35 @@ export const SignUpForm = ({ switchMode }: SignUpFormProps) => {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   })
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    const response = await fetch('/api/signup', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
 
-    const result = await response.json()
+      const result = await response.json()
 
-    if (result.ok) {
-      reset()
-      switchMode('sign-in')
+      if (result.ok) {
+        reset()
+        switchMode('sign-in')
+      } else {
+        setError('terms', {
+          type: 'manual',
+          message: 'Something went wrong',
+        })
+      }
+    } catch (error: unknown) {
+      setError('terms', {
+        type: 'manual',
+        message: 'Something went wrong',
+      })
     }
   }
 

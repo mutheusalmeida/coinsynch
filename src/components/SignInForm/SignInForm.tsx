@@ -4,7 +4,6 @@ import { ReactComponent as EmailIcon } from '@/assets/email-icon.svg'
 import { ReactComponent as LockerIcon } from '@/assets/locker-icon.svg'
 import * as Form from '@/components/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { FormPassword } from '../FormPassword'
@@ -20,35 +19,44 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>
 
 export const SignInForm = () => {
-  const [result, setResult] = useState('')
-
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
   })
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    const response = await fetch('/api/signin', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
+    try {
+      const response = await fetch('/api/signin', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
 
-    const result = await response.json()
+      const result = await response.json()
 
-    if (result.ok) {
-      reset()
-      window.location.assign('/dashboard')
-    } else {
-      setResult('Incorrect email or password')
+      if (result.ok) {
+        reset()
+        window.location.assign('/dashboard')
+      } else {
+        setError('password', {
+          type: 'manual',
+          message: 'Incorrect email or password',
+        })
+      }
+    } catch (error: unknown) {
+      setError('password', {
+        type: 'manual',
+        message: 'Something went wrong',
+      })
     }
   }
 
   return (
-    <Form.Root onSubmit={handleSubmit(onSubmit)}>
+    <Form.Root onSubmit={handleSubmit(onSubmit, () => {})}>
       <Form.InputRoot>
         <EmailIcon />
 
@@ -82,8 +90,6 @@ export const SignInForm = () => {
       </Form.InputRoot>
 
       {errors.password && <Form.Error>{errors.password.message}</Form.Error>}
-
-      {result && <Form.Error>{result}</Form.Error>}
 
       <S.ActionLink>Forgot password?</S.ActionLink>
 
