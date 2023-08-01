@@ -5,10 +5,12 @@ export const Dashboard = () => {
   const { user } = useUser()
 
   return (
-    <>
-      <h1>Welcome back, {user.name}</h1>
+    <div className="flex flex-col p-6">
+      <h1 className="mb-4">Welcome back, {user.name}</h1>
 
-      <Link to="/analytics">Go to Analytics</Link>
-    </>
+      <Link to="/analytics" className="w-max hover:underline">
+        Go to Analytics
+      </Link>
+    </div>
   )
 }

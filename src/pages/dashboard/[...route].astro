@@ -1,12 +1,7 @@
 ---
+import { Root } from '@/components/Root'
+import Layout from '@/layouts/Layout.astro'
 import type { UserType } from '@/resources/types'
-import { Root } from '../../components/Root'
-import Layout from '../../layouts/Layout.astro'
-export const prerender = true
-
-export function getStaticPaths() {
-  return [{ params: { route: undefined } }, { params: { route: 'analytics' } }]
-}
 
 let user = Astro.cookies.get('user')
 

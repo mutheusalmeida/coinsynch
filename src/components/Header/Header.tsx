@@ -33,8 +33,9 @@ const DialogContent = styled(Dialog.Content)`
   left: 0;
   transform: none;
   width: 70vw;
+  margin: 0;
   max-width: 15em;
-  max-height: calc(100svh - 56px);
+  min-height: calc(100svh - (2 * 56px));
   animation: ${contentShow} 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 25;
 
