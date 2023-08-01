@@ -32,101 +32,101 @@ const data = [
     class="fluid-spacing fluid-pb"
     style="--spacing-min: 1rem; --spacing-max: 1.5rem;"
   >
-  <div
-    data-js="slide-viewport-about"
-    class="embla__viewport fluid-spacing fluid-px fluid-pb"
-    style="--spacing-min: 2.5rem; --spacing-max: 6rem;"
-  >
-    <div class="embla__container">
-      {
-        data.map(({ icon }) => (
-          <div class="embla__slide">
-            <div class="card">
-              <Image class="card__icon" src={icon} alt="Bitcoin icon" />
-
-              <h4
-                class="card__subtitle fluid-type"
-                style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
-              >
-                For your company
-              </h4>
-
-              <h5
-                class="card__title fluid-type"
-                style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
-              >
-                Crypto Solutions
-              </h5>
-
-              <p class="card__desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                aliquam.
-              </p>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-
-    <div class="cards">
-      <div class="cards__wrapper">
+    <div
+      data-js="slide-viewport-about"
+      class="embla__viewport fluid-spacing fluid-px fluid-pb"
+      style="--spacing-min: 2.5rem; --spacing-max: 6rem;"
+    >
+      <div class="embla__container">
         {
-          data.slice(0, 2).map(({ icon }) => (
-            <div class="card">
-              <Image class="card__icon" src={icon} alt="Bitcoin icon" />
+          data.map(({ icon }) => (
+            <div class="embla__slide">
+              <div class="card">
+                <Image class="card__icon" src={icon} alt="Bitcoin icon" />
 
-              <h4
-                class="card__subtitle fluid-type"
-                style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
-              >
-                For your company
-              </h4>
+                <h4
+                  class="card__subtitle fluid-type"
+                  style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+                >
+                  For your company
+                </h4>
 
-              <h5
-                class="card__title fluid-type"
-                style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
-              >
-                Crypto Solutions
-              </h5>
+                <h5
+                  class="card__title fluid-type"
+                  style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
+                >
+                  Crypto Solutions
+                </h5>
 
-              <p class="card__desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                aliquam.
-              </p>
+                <p class="card__desc">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam.
+                </p>
+              </div>
             </div>
           ))
         }
       </div>
 
-      <div class="cards__wrapper">
-        {
-          data.slice(2, 4).map(({ icon }) => (
-            <div class="card">
-              <Image class="card__icon" src={icon} alt="Bitcoin icon" />
+      <div class="cards">
+        <div class="cards__wrapper">
+          {
+            data.slice(0, 2).map(({ icon }) => (
+              <div class="card">
+                <Image class="card__icon" src={icon} alt="Bitcoin icon" />
 
-              <h4
-                class="card__subtitle fluid-type"
-                style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
-              >
-                For your company
-              </h4>
+                <h4
+                  class="card__subtitle fluid-type"
+                  style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+                >
+                  For your company
+                </h4>
 
-              <h5
-                class="card__title fluid-type"
-                style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
-              >
-                Crypto Solutions
-              </h5>
+                <h5
+                  class="card__title fluid-type"
+                  style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
+                >
+                  Crypto Solutions
+                </h5>
 
-              <p class="card__desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-                aliquam.
-              </p>
-            </div>
-          ))
-        }
+                <p class="card__desc">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam.
+                </p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="cards__wrapper">
+          {
+            data.slice(2, 4).map(({ icon }) => (
+              <div class="card">
+                <Image class="card__icon" src={icon} alt="Bitcoin icon" />
+
+                <h4
+                  class="card__subtitle fluid-type"
+                  style="--font-size-min: var(--font-size-14); --font-size-max: var(--font-size-16);"
+                >
+                  For your company
+                </h4>
+
+                <h5
+                  class="card__title fluid-type"
+                  style="--font-size-min: var(--font-size-20); --font-size-max: var(--font-size-24);"
+                >
+                  Crypto Solutions
+                </h5>
+
+                <p class="card__desc">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
+                  aliquam.
+                </p>
+              </div>
+            ))
+          }
+        </div>
       </div>
-    </div>
     </div>
   </div>
 </div>
@@ -152,6 +152,7 @@ const data = [
     padding: 1.5em;
     box-shadow: var(--box-shadow-lg);
     background-color: var(--white);
+    border-radius: 0.375em;
   }
 
   .card__icon {
@@ -179,6 +180,7 @@ const data = [
   .cards {
     display: none;
     width: max-content;
+    max-width: 100%;
     margin: 0 auto;
     gap: 1.5em;
 

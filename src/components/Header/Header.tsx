@@ -7,6 +7,7 @@ import * as Dialog from '@/components/BaseDialog'
 import * as Popover from '@radix-ui/react-popover'
 import { useState } from 'react'
 import { keyframes, styled } from 'styled-components'
+import { twMerge } from 'tailwind-merge'
 
 const contentShow = keyframes`
    from {
@@ -51,6 +52,7 @@ const DialogContent = styled(Dialog.Content)`
 export const Header = () => {
   const [container, setContainer] = useState<HTMLElement | null>(null)
   const [open, setOpen] = useState(false)
+  const [openPopover, setOpenPopover] = useState(false)
 
   const handleLogout = async () => {
     const response = await fetch('/api/logout', {
@@ -66,7 +68,7 @@ export const Header = () => {
     <>
       <div className="absolute" ref={setContainer}></div>
 
-      <header className="flex items-center justify-between bg-white px-6 py-4 shadow-sm-b">
+      <header className="z-20 flex items-center justify-between bg-white px-6 py-4 shadow-sm-b">
         <Dialog.Root
           open={open}
           onOpenChange={(value) => {
@@ -100,12 +102,17 @@ export const Header = () => {
 
         <Logo className="h-4 w-[5.875em]" />
 
-        <Popover.Root>
+        <Popover.Root open={openPopover} onOpenChange={setOpenPopover}>
           <Popover.Trigger asChild>
             <button className="flex appearance-none items-center gap-1">
               <AvatarIcon className="aspect-square h-6 w-6 rounded-full" />
 
-              <ArrowIcon className="h-2 w-2 rotate-90 [&>path]:fill-[var(--gray-400)]" />
+              <ArrowIcon
+                className={twMerge(
+                  'h-2 w-2 [&>path]:fill-[var(--gray-400)]',
+                  openPopover ? '-rotate-90' : 'rotate-90'
+                )}
+              />
             </button>
           </Popover.Trigger>
           <Popover.Portal>
@@ -126,6 +133,7 @@ export const Header = () => {
                   </span>
                 </button>
               </Popover.Close>
+
               <Popover.Arrow className="fill-white" />
             </Popover.Content>
           </Popover.Portal>
